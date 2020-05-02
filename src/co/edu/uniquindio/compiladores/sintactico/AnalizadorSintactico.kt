@@ -1,11 +1,8 @@
 package co.edu.uniquindio.compiladores.sintactico
-
 import co.edu.uniquindio.compiladores.lexico.Categoria
 import co.edu.uniquindio.compiladores.lexico.ErrorLexico
 import co.edu.uniquindio.compiladores.lexico.Token
 import java.util.*
-
-
 /**
  *Clase principal del analizador sintactico donde se maneja toda la estructura del compilador
  * @param listaTokens; lista de tokens previamente preparada por el analizador lexico
@@ -540,7 +537,7 @@ class AnalizadorSintactico(var listaTokens: ArrayList<Token>) {
                 if (tokenActual.categoria == Categoria.PARENTESIS_IZQUIERDO) {
                     var parIzq = tokenActual
                     obtenerSiguienteToken()
-                    var argumentos: ArrayList<Argumento?>? = null
+                    var argumentos: ArrayList<Argumento>? = null
                   //  if (tokenActual.categoria != Categoria.PARENTESIS_DERECHO) {
                         argumentos = esListaArgumentos()
                  //   }
@@ -568,7 +565,7 @@ class AnalizadorSintactico(var listaTokens: ArrayList<Token>) {
     }
 
     /**
-	 * <Arreglo>::= "[" "]"TipoDeDato identificador "{" [<ListaArgumentos] "}" ;
+	 * <Arreglo>::= "[" "]"TipoDeDato identificador "{" [<ListaArgumentos] "}" °
 	 */
     fun esArreglo(): Sentencia? {
         if (tokenActual.categoria == Categoria.CORCHETE_IZQUIERDO) {
@@ -612,7 +609,6 @@ class AnalizadorSintactico(var listaTokens: ArrayList<Token>) {
         }
         return null
     }
-
 
 
     /**
@@ -679,11 +675,9 @@ class AnalizadorSintactico(var listaTokens: ArrayList<Token>) {
 
     /**
      * <esExpresionRelacional> :: = "(" <esExpresionAritmetica> <operadorRelacional>
-     * <esExpresionAritmetica> | <esExpresionAritmetica> <operadorRelacional>
-     * <esExpresionAritmetica> | falso | verdadero
+     * <esExpresionAritmetica>  | falso | verdadero
      */
     fun esExpresionRelacional(): ExpresionRelacional? {
-
         if (tokenActual.categoria == Categoria.PARENTESIS_IZQUIERDO) {
             obtenerSiguienteToken();
             var operador: Token? = null
@@ -780,7 +774,7 @@ class AnalizadorSintactico(var listaTokens: ArrayList<Token>) {
      * </expresionAritmeticaAuxiliar></ExpresionAritmetica></expresionAritmeticaAuxiliar>
      */
     fun esExpresionAritmeticaAuxiliar(): ExpresionAritmeticaAuxiliar? {
-        if (tokenActual.categoria === Categoria.OPERADOR_ARITMETICO) {
+        if (tokenActual.categoria == Categoria.OPERADOR_ARITMETICO) {
             val operador = tokenActual
             obtenerSiguienteToken()
             val eA = esExpresionAritmetica()
@@ -795,8 +789,7 @@ class AnalizadorSintactico(var listaTokens: ArrayList<Token>) {
     }
 
     /**
-     * <esExpresionLogica>::= "!" <esExpresionRelacional> | <esExpresionRelacional>
-     * <OperadorLogico> <esExpresionRelacional>
+     * <esExpresionLogica>::= "!" <esExpresionRelacional> | <esExpresionRelacional><OperadorLogico> <esExpresionRelacional>
      * </esExpresionRelacional></OperadorLogico></esExpresionRelacional></esExpresionRelacional></esExpresionLogica>
      */
     fun esExpresionLogica(): ExpresionLogica? {
@@ -812,7 +805,7 @@ class AnalizadorSintactico(var listaTokens: ArrayList<Token>) {
         } else {
             val er = esExpresionRelacional()
             if (er != null) {
-                if (tokenActual.categoria === Categoria.OPERADOR_LOGICO && tokenActual.lexema != "!") {
+                if (tokenActual.categoria == Categoria.OPERADOR_LOGICO && tokenActual.lexema != "!") {
                     val operador = tokenActual
                     obtenerSiguienteToken()
                     val er1 = esExpresionRelacional()
@@ -845,11 +838,11 @@ class AnalizadorSintactico(var listaTokens: ArrayList<Token>) {
                 reportarErrores("falta el valor numerico")
             }
         } else {
-            if (tokenActual.categoria === Categoria.ENTERO || tokenActual.categoria === Categoria.REAL) {
+            if (tokenActual.categoria == Categoria.ENTERO || tokenActual.categoria == Categoria.REAL) {
                 val Valor = tokenActual
                 return ValorNumerico(Signo, Valor)
             } else {
-                if (tokenActual.categoria === Categoria.IDENTIFICADOR_VARIABLE) {
+                if (tokenActual.categoria == Categoria.IDENTIFICADOR_VARIABLE) {
                     val Valor = tokenActual
                     return ValorNumerico(Signo, Valor)
                 }
@@ -874,8 +867,8 @@ class AnalizadorSintactico(var listaTokens: ArrayList<Token>) {
      * <ListaArgumentos> ::= <Argumento>[","<ListaArgumentos>]
      * </ListaArgumentos></Argumento></ListaArgumentos>
      */
-    fun esListaArgumentos(): ArrayList<Argumento?>? {
-        var argumentos = ArrayList<Argumento?>()
+    fun esListaArgumentos(): ArrayList<Argumento> {
+        var argumentos = ArrayList<Argumento>()
         var a: Argumento? = esArgumento()
         while (a != null) {
             argumentos.add(a)

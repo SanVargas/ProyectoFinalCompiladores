@@ -1,9 +1,16 @@
 package co.edu.uniquindio.compiladores.sintactico
-
-class Argumento(var exp:Expresion) {
+import javafx.scene.control.TreeItem
+/**
+ * Clase encargada de crear un argumento
+ * @author Santiago Vargas - Sebastian Ceballos
+ */
+class Argumento(var exp:Expresion?) {
 
     override fun toString(): String {
         return "Argumento(exp=$exp)"
+    }
+    fun getArbolVisual(): TreeItem<String> {
+        return TreeItem("${exp}")
     }
 
 }

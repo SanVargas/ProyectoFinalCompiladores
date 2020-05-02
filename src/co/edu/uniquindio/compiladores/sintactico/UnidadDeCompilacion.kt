@@ -1,17 +1,11 @@
 package co.edu.uniquindio.compiladores.sintactico
-
 import javafx.scene.control.TreeItem
-
-
 /**
- * Clase que permite crear la unidad de compilacion
- * @param listaFunciones; lista de funciones
+ * Clase encargada de crear la unidad de compilacion
+ * @author Santiago Vargas - Sebastian Ceballos
  */
-class UnidadDeCompilacion(var listaFunciones:ArrayList<Funcion>) {
+class UnidadDeCompilacion(var listaFunciones: ArrayList<Funcion>) {
 
-    /**
-     * Funcion toString de la clase unidad de compilacion
-     */
     override fun toString(): String {
         return "UnidadDeCompilacion(listaFunciones=$listaFunciones)"
     }

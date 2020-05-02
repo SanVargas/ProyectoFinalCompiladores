@@ -1,7 +1,10 @@
 package co.edu.uniquindio.compiladores.sintactico
 import co.edu.uniquindio.compiladores.lexico.Token
 import javafx.scene.control.TreeItem
-
+/**
+ * Clase encargada de crear una declaracion de variable
+ * @author Santiago Vargas - Sebastian Ceballos
+ */
 class DeclaracionVariable(var tipoDato: Token, var identificador:Token, var finSentencia:Token): Sentencia(){
 
     override fun toString(): String {

@@ -1,10 +1,9 @@
 package co.edu.uniquindio.compiladores.sintactico
 import co.edu.uniquindio.compiladores.lexico.Token
 import javafx.scene.control.TreeItem
-
 /**
- *
- * Clase que permite crear una funcion
+ * Clase encargada de crear una funcion
+ * @author Santiago Vargas - Sebastian Ceballos
  */
 class Funcion(var palabraFun:Token?, var tipoRetorno:Token?, var identificador:Token?, var parIzq:Token?,
               var lstParametros:ArrayList<Parametro>, var parDer:Token?, var llaveIzq:Token?, var  lstSentencias:ArrayList<Sentencia>,
@@ -17,13 +16,11 @@ class Funcion(var palabraFun:Token?, var tipoRetorno:Token?, var identificador:T
 
     fun getArbolVisual(): TreeItem<String> {
         var raiz = TreeItem("Funcion")
-        raiz.children.add(TreeItem("Nombre: ${palabraFun?.lexema}"))
-        raiz.children.add(TreeItem("Retorno:  ${tipoRetorno?.lexema}" ))
         raiz.children.add(TreeItem("Identificador:  ${identificador?.lexema}" ))
+        raiz.children.add(TreeItem("Retorno:  ${tipoRetorno?.lexema}" ))
 
         var raizParametro = TreeItem("Parametro")
         for(p in lstParametros){
-            print("entro")
             raizParametro.children.add(p.getArbolVisual())
         }
 
@@ -35,8 +32,5 @@ class Funcion(var palabraFun:Token?, var tipoRetorno:Token?, var identificador:T
         raiz.children.add(raizSentencia)
         return raiz
     }
-
-
-
 
 }

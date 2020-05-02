@@ -1,5 +1,6 @@
 package co.edu.uniquindio.compiladores.sintactico
 import co.edu.uniquindio.compiladores.lexico.Token
+import javafx.scene.control.TreeItem
 
 /**
  * Clase que permite crear una expresion Cadena
@@ -14,4 +15,12 @@ class ExpresionRelacional(var eA:ExpresionAritmetica?, var operador:Token?, var 
     override fun toString(): String {
         return "ExpresionRelacional(eA=$eA,operador=$operador,eA1=$eA1)"
     }
+
+    override fun getArbolVisual(): TreeItem<String> {
+        var raiz = TreeItem("Expresion Relacional")
+        raiz.children.add(TreeItem("Expresion1: ${eA}"))
+        raiz.children.add(TreeItem("Expresion2: ${eA1}"))
+        return raiz
+    }
+
 }
