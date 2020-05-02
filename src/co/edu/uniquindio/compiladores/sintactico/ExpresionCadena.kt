@@ -14,8 +14,6 @@ class ExpresionCadena(var cadena: Token?, var mas: Token?, var expresion: Expres
 
     override fun getArbolVisual(): TreeItem<String> {
         var raiz = TreeItem("Expresion Cadena")
-        raiz.children.add(TreeItem("Cadena: ${cadena?.lexema}"))
-        raiz.children.add(TreeItem("Expresion: ${expresion}"))
         return raiz
     }
 

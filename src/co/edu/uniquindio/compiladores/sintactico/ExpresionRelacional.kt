@@ -18,8 +18,6 @@ class ExpresionRelacional(var eA:ExpresionAritmetica?, var operador:Token?, var 
 
     override fun getArbolVisual(): TreeItem<String> {
         var raiz = TreeItem("Expresion Relacional")
-        raiz.children.add(TreeItem("Expresion1: ${eA}"))
-        raiz.children.add(TreeItem("Expresion2: ${eA1}"))
         return raiz
     }
 

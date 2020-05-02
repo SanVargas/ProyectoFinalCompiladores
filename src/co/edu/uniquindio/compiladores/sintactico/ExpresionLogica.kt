@@ -15,8 +15,6 @@ open class ExpresionLogica(var eR:ExpresionRelacional?,var eR1:ExpresionRelacion
 
     override fun getArbolVisual(): TreeItem<String> {
         var raiz = TreeItem("Expresion Logica")
-        raiz.children.add(TreeItem("Expresion1: ${eR}"))
-        raiz.children.add(TreeItem("Expresion2: ${eR1}"))
         return raiz
     }
 

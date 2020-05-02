@@ -13,8 +13,6 @@ open class ExpresionAritmeticaAuxiliar(var  operador:Token , var  eA:ExpresionAr
 
     override fun getArbolVisual(): TreeItem<String> {
         var raiz = TreeItem("Expresion Aritmetica Auxiliar")
-        raiz.children.add(TreeItem("Expresion1: ${eA}"))
-        raiz.children.add(TreeItem("Expresion2: ${eAux}"))
         return raiz
     }
 

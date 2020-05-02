@@ -6,9 +6,8 @@ import javafx.scene.control.TreeItem
  */
 open abstract class Expresion() {
 
-   open fun getArbolVisual(): TreeItem<String> {
-        var raiz = TreeItem("Expresion")
-        return raiz
+   open fun getArbolVisual(): TreeItem<String>? {
+        return null
     }
 
 }

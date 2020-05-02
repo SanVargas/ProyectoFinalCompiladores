@@ -14,9 +14,6 @@ open class ExpresionAritmetica(var  eA:ExpresionAritmetica?, var vN:ValorNumeric
 
     override fun getArbolVisual(): TreeItem<String> {
         var raiz = TreeItem("Expresion Aritmetica")
-        raiz.children.add(TreeItem("Expresion1: ${eA}"))
-        raiz.children.add(TreeItem("Expresion2: ${eAux}"))
-        raiz.children.add(TreeItem("Tipo: ${vN?.tipo?.lexema}"))
         return raiz
     }
 
