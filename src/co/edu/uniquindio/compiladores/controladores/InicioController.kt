@@ -45,15 +45,16 @@ class InicioController : Initializable{
     @FXML
     fun analizar(e: ActionEvent) {
         if(txtCodigo.text.length>0){
-            val lexico = AnalizadorLexico(txtCodigo.text)
+            var lexico = AnalizadorLexico(txtCodigo.text)
             lexico.analizar()
+
             tablaPrincipal.items = FXCollections.observableArrayList(lexico.listaTokens)
             tablaError.items = FXCollections.observableArrayList(lexico.listaErrores)
             print(lexico.listaTokens)
             print(lexico.listaErrores)
             if(lexico.listaErrores.isEmpty()){
-                val sintactico = AnalizadorSintactico(lexico.listaTokens)
-                val uC = sintactico.esUnidadDeCompilacion()
+                var sintactico = AnalizadorSintactico(lexico.listaTokens)
+                var uC = sintactico.esUnidadDeCompilacion()
                 if(uC != null){
                     arbolVisual.root = uC.getArbolVisual()
                 }else{
