@@ -24,7 +24,9 @@ class Condicion(
 
     override fun getArbolVisual(): TreeItem<String> {
         var raiz = TreeItem("Condicion")
-        raiz.children.add(TreeItem("Expresion: ${expresionLogica?.getArbolVisual()}"))
+        var exp = TreeItem("Expresion")
+        exp.children.add(expresionLogica?.getArbolVisual())
+        raiz.children.add(exp)
         if (sentencias != null) {
             var raizSentencia = TreeItem("Sentencias")
             for (s in sentencias) {

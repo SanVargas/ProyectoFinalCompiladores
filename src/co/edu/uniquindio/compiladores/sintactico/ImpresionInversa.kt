@@ -10,7 +10,7 @@ class ImpresionInversa(var palabraReservada: Token, var parIzq:Token, var exp:Ex
 
     override fun getArbolVisual(): TreeItem<String> {
         var raiz = TreeItem("Impresion Inversa")
-        raiz.children.add(TreeItem("Expresion:  ${exp}"))
+        raiz.children.add(exp?.getArbolVisual())
         return raiz
     }
 

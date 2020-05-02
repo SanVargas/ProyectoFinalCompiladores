@@ -14,7 +14,7 @@ class Impresion(var palabraReser: Token?, var parIzq: Token?, var expresion: Exp
 
     override fun getArbolVisual(): TreeItem<String> {
         var raiz = TreeItem("Impresion")
-        raiz.children.add(TreeItem("Expresion:  ${expresion}"))
+        raiz.children.add(expresion?.getArbolVisual())
         return raiz
     }
 

@@ -21,7 +21,7 @@ class Ciclo(var palabraReservada:Token,  var parIzq:Token,  var expresionLogica:
         }
         raiz.children.add(raizSentencia)
 
-        raiz.children.add(TreeItem("Expresion: ${expresionLogica}"))
+        raiz.children.add(expresionLogica.getArbolVisual())
         return raiz
     }
 
