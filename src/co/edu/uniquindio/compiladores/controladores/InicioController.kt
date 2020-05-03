@@ -3,6 +3,7 @@ import co.edu.uniquindio.compiladores.sintactico.AnalizadorSintactico
 import co.edu.uniquindio.compiladores.lexico.AnalizadorLexico
 import co.edu.uniquindio.compiladores.lexico.ErrorLexico
 import co.edu.uniquindio.compiladores.lexico.Token
+import co.edu.uniquindio.compiladores.sintactico.ErrorSintactico
 import javafx.collections.FXCollections
 import javafx.event.ActionEvent
 import javafx.fxml.FXML
@@ -28,6 +29,11 @@ class InicioController : Initializable{
     @FXML lateinit var colFilaError: TableColumn<ErrorLexico, String>
     @FXML lateinit var colColumnaError: TableColumn<ErrorLexico, String>
 
+    @FXML lateinit var tablaErrorSintactico: TableView<ErrorSintactico>
+    @FXML lateinit var colErrSintactico: TableColumn<ErrorSintactico, String>
+    @FXML lateinit var colFilaSintactico: TableColumn<ErrorSintactico, String>
+    @FXML lateinit var colColSintactico: TableColumn<ErrorSintactico, String>
+
     @FXML lateinit var arbolVisual: TreeView<String>
 
 
@@ -40,6 +46,10 @@ class InicioController : Initializable{
         colFilaError.cellValueFactory = PropertyValueFactory("fila")
         colColumnaError.cellValueFactory = PropertyValueFactory("columna")
         colError.cellValueFactory = PropertyValueFactory("mensaje")
+
+        colFilaSintactico.cellValueFactory = PropertyValueFactory("fila")
+        colColSintactico.cellValueFactory = PropertyValueFactory("columna")
+        colErrSintactico.cellValueFactory = PropertyValueFactory("mensaje")
     }
 
     @FXML
@@ -55,6 +65,8 @@ class InicioController : Initializable{
             if(lexico.listaErrores.isEmpty()){
                 var sintactico = AnalizadorSintactico(lexico.listaTokens)
                 var uC = sintactico.esUnidadDeCompilacion()
+                tablaErrorSintactico.items = FXCollections.observableArrayList(sintactico.listaErrores)
+                print(lexico.listaErrores)
                 if(uC != null){
                     arbolVisual.root = uC.getArbolVisual()
                 }else{
@@ -63,10 +75,6 @@ class InicioController : Initializable{
                     alerta.contentText="Hay errores lexicos en el codigo fuente"
                 }
             }
-
-
-
-
         }
     }
 

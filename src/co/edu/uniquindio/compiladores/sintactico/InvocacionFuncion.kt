@@ -10,13 +10,13 @@ class InvocacionFuncion(var punto: Token, var id:Token, var parIzq:Token, var ar
         return "InvocacionFuncion(punto=$punto, id=$id, parIzq=$parIzq, argumentos=$argumentos, parDer=$parDer, finSentencia=$finSentencia)"
     }
 
-    fun getArbolVisual(): TreeItem<String> {
+    override fun getArbolVisual(): TreeItem<String> {
         var raiz = TreeItem("Invocacion Funcion")
         raiz.children.add(TreeItem("Identificador:  ${id?.lexema}" ))
 
         var raizArgumento = TreeItem("Argumentos")
         for(p in argumentos){
-            raizArgumento.children.add(p.getArbolVisual())
+            raiz.children.add(p.getArbolVisual())
         }
         raiz.children.add(raizArgumento)
 

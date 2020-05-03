@@ -25,13 +25,40 @@
          <font>
             <Font name="Arial Narrow" size="19.0" />
          </font></Label>
-      <TableView fx:id="tablaError" layoutX="14.0" layoutY="401.0" prefHeight="183.0" prefWidth="558.0">
-        <columns>
-            <TableColumn fx:id="colFilaError" prefWidth="50.0" text="FIL" />
-            <TableColumn fx:id="colColumnaError" prefWidth="50.0" text="COL" />
-          <TableColumn fx:id="colError" prefWidth="457.0" text="ERROR" />
-        </columns>
-      </TableView>
       <TreeView fx:id="arbolVisual" layoutX="598.0" layoutY="43.0" prefHeight="541.0" prefWidth="279.0" />
+      <TabPane layoutX="14.0" layoutY="393.0" prefHeight="200.0" prefWidth="558.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Error Lexico">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="171.0" prefWidth="510.0">
+                     <children>
+                        <TableView fx:id="tablaError" layoutX="1.0" prefHeight="169.0" prefWidth="558.0">
+                          <columns>
+                              <TableColumn fx:id="colFilaError" prefWidth="50.0" text="FIL" />
+                              <TableColumn fx:id="colColumnaError" prefWidth="50.0" text="COL" />
+                            <TableColumn fx:id="colError" prefWidth="457.0" text="ERROR" />
+                          </columns>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Error Sintactico">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="tablaErrorSintactico" layoutX="2.0" prefHeight="170.0" prefWidth="558.0">
+                          <columns>
+                            <TableColumn fx:id="colFilaSintactico" prefWidth="50.0" text="FIL" />
+                            <TableColumn fx:id="colColSintactico" prefWidth="50.0" text="COL" />
+                              <TableColumn fx:id="colErrSintactico" prefWidth="457.0" text="ERROR" />
+                          </columns>
+                        </TableView>
+                     </children></AnchorPane>
+
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
    </children>
 </AnchorPane>

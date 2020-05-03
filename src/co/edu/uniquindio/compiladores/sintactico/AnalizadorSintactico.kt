@@ -16,7 +16,7 @@ class AnalizadorSintactico(var listaTokens: ArrayList<Token>) {
      */
     var posicionActual = 0
     var tokenActual = listaTokens[0]
-    var listaErrores = ArrayList<ErrorLexico>()
+    var listaErrores = ArrayList<ErrorSintactico>()
 
     /**
      * Funcion que nos permite ir cambiando de posicion en la lista de tokens
@@ -33,7 +33,7 @@ class AnalizadorSintactico(var listaTokens: ArrayList<Token>) {
      * @param mensaje; mensaje generado por el error
      */
     fun reportarErrores(mensaje: String) {
-        listaErrores.add(ErrorLexico(mensaje, tokenActual.fila, tokenActual.columna))
+        listaErrores.add(ErrorSintactico(mensaje, tokenActual.fila, tokenActual.columna))
     }
 
     /**
@@ -79,7 +79,6 @@ class AnalizadorSintactico(var listaTokens: ArrayList<Token>) {
             var func = tokenActual
             obtenerSiguienteToken()
             if (estipoDato()) {
-                print("entro")
                 var tipoRetorno = tokenActual
                 obtenerSiguienteToken()
                 if (tokenActual.categoria == Categoria.IDENTIFICADOR_VARIABLE) {
@@ -129,7 +128,7 @@ class AnalizadorSintactico(var listaTokens: ArrayList<Token>) {
     fun estipoDato(): Boolean {
         if (tokenActual.categoria == Categoria.PALABRA_RESERVADA && tokenActual.lexema == "vacio" || tokenActual.categoria == Categoria.PALABRA_RESERVADA && tokenActual.lexema == "entero" || (tokenActual.categoria == Categoria.PALABRA_RESERVADA
                     && tokenActual.lexema == "decimal") || tokenActual.categoria == Categoria.PALABRA_RESERVADA && tokenActual.lexema == "cadena" || (tokenActual.categoria == Categoria.PALABRA_RESERVADA
-                    && tokenActual.lexema == "logico")){
+                    && tokenActual.lexema == "log")){
             return true
         }
         return false
