@@ -166,7 +166,7 @@ class AnalizadorSintactico(var listaTokens: ArrayList<Token>) {
     }
 
     /**
-     * <esParametro>::= <esTipoDato> identificador </esTipoDato></esParametro>
+     * <esParametro>::= <esTipoDato> identificador
      */
     fun esParametro(): Parametro? {
         if (estipoDato()) {
@@ -195,9 +195,8 @@ class AnalizadorSintactico(var listaTokens: ArrayList<Token>) {
     }
 
     /**
-     * <esSentencia>::=<esCondicion>|<esDeclaracionDeVariable>|<esAsignacion>|<esImpresion>|<esRetorno>|
-     * <esLectura>|<esCiclo>|<esInvocacion>
-     * </esInvocacion></esCiclo></esLectura></esRetorno></esImpresion></esAsignacion></esDeclaracionDeVariable></esCondicion></esSentencia>
+     * <esSentencia> ::= <esCondicion>|<esDeclaracionDeVariable>|<esAsignacion>|<esImpresion>|<esRetorno>| <esLectura>|<esCiclo>|<esInvocacion>
+     *
      */
     fun esSentencia(): Sentencia? {
         var c: Condicion? = esCondicion()
@@ -247,7 +246,7 @@ class AnalizadorSintactico(var listaTokens: ArrayList<Token>) {
 
     /**
      * <esCondicion>::= si "(" <esExpresionLogica> ")" "{" [<esListaSentencias>] "}"
-     * </esListaSentencias></esExoresuinLogica></esCondicion>
+     *
      */
     fun esCondicion(): Condicion? {
         if (tokenActual.categoria == Categoria.PALABRA_RESERVADA && tokenActual.lexema == "si") {
@@ -294,7 +293,7 @@ class AnalizadorSintactico(var listaTokens: ArrayList<Token>) {
 
     /**
      * <esDeclaracionDeVariable>::= <esTopoDato> identificador "°"
-     * </esTopoDato></esDeclaracionDeVariable>
+     *
      */
     fun esDeclaracionVariable(): DeclaracionVariable? {
         if (estipoDato()) {
@@ -319,7 +318,7 @@ class AnalizadorSintactico(var listaTokens: ArrayList<Token>) {
 
     /**
      * <esAdignacion>::= identificador <operadorAsignacion> <esTermino> "°"
-     * </esTermino></operadorAsignacion></esAdignacion>
+     *
      */
     fun esAsignacionVariable(): AsignacionVariable? {
         if (tokenActual.categoria == Categoria.IDENTIFICADOR_VARIABLE) {
@@ -350,7 +349,7 @@ class AnalizadorSintactico(var listaTokens: ArrayList<Token>) {
 
     /**
      * <esImpresion>::= imprimir "(" [<esExpresion>] ")" "°"
-     * </esExpresion></esImpresion>
+     *
      */
     fun esImpresion(): Impresion? {
         if (tokenActual.categoria == Categoria.PALABRA_RESERVADA && tokenActual.lexema == "imprimir") {
@@ -382,7 +381,7 @@ class AnalizadorSintactico(var listaTokens: ArrayList<Token>) {
 
     /**
      * <esImpresion>::= imprimirInverso "(" [<esExpresion>] ")" "°"
-     * </esExpresion></esImpresion>
+     *
      */
     fun esImpresionInversa(): ImpresionInversa? {
         if (tokenActual.categoria == Categoria.PALABRA_RESERVADA && tokenActual.lexema == "impInversa") {
@@ -414,7 +413,7 @@ class AnalizadorSintactico(var listaTokens: ArrayList<Token>) {
 
     /**
      * <esRetorno>::= retornar <es Expresion> "°"
-     * </es></esRetorno>
+     *
      */
     fun esRetorno(): Retorno? {
         if (tokenActual.categoria == Categoria.PALABRA_RESERVADA && tokenActual.lexema == "retorno") {
@@ -438,7 +437,7 @@ class AnalizadorSintactico(var listaTokens: ArrayList<Token>) {
 
     /**
      * <esLectura> ::= leer identificador "°"
-     * </esLectura>
+     *
      */
     fun esLectura(): Leer? {
         if (tokenActual.categoria == Categoria.PALABRA_RESERVADA && tokenActual.lexema == "leer") {
@@ -463,7 +462,7 @@ class AnalizadorSintactico(var listaTokens: ArrayList<Token>) {
 
     /**
      * <esLecturaInversa> ::= leerInverso identificador "°"
-     * </esLecturaInversa>
+     *
      */
     fun esLecturaInversa(): LeerInverso? {
         if (tokenActual.categoria == Categoria.PALABRA_RESERVADA && tokenActual.lexema == "leerInverso") {
@@ -488,7 +487,7 @@ class AnalizadorSintactico(var listaTokens: ArrayList<Token>) {
 
     /**
      * <esCliclo> ::= mientras "(" <esExpresionLogica> ")" "{" [<esListaSentencias>] "}"
-     * </esListaSentencias></esExpresionLogica></esCliclo>
+     *
      */
     fun esCiclo(): Ciclo? {
         if (tokenActual.categoria == Categoria.PALABRA_RESERVADA && tokenActual.lexema == "mientras") {
@@ -532,7 +531,7 @@ class AnalizadorSintactico(var listaTokens: ArrayList<Token>) {
 
     /**
      * <esInvocacion>::= "." identificador "(" [<esListaArgumentos>] ")" "°"
-     * </esListaArgumentos></esInvocacion>
+     *
      */
     fun esInvocacion(): InvocacionFuncion? {
         if (tokenActual.categoria == Categoria.PUNTO) {
@@ -657,7 +656,7 @@ class AnalizadorSintactico(var listaTokens: ArrayList<Token>) {
 
     /**
      * <esExpresionCadena> ::= <cadena> | <cadena> "+" <expresion>
-     * </expresion></cadena></cadena></esExpresionCadena>
+     *
      */
     fun esExpresionCadena(): ExpresionCadena? {
         if (tokenActual.categoria == Categoria.CADENA_CARACTERES) {
@@ -712,7 +711,7 @@ class AnalizadorSintactico(var listaTokens: ArrayList<Token>) {
     }
 
     /**
-     *
+     *<ExpAritmetica> ::= "("<ExpAritmetica>")" [operadorAritmetico <ExpAritmetica>] | <ValorNumerico> [operadorAritmetico <ExpAritmetica>]
      */
     fun esExpresionAritmetica(): ExpresionAritmetica? {
         if (tokenActual.categoria == Categoria.PARENTESIS_IZQUIERDO) {
@@ -780,8 +779,7 @@ class AnalizadorSintactico(var listaTokens: ArrayList<Token>) {
     }
 
     /**
-     * <ValorNumerico>::=[<signo>] entero | [<signo>] real | identificar
-     * </signo></signo></ValorNumerico>
+     * <ValorNumerico>::=[<signo>] entero | [<signo>] decimal | identificar
      */
     fun esValorNumerico(): ValorNumerico? {
         var signo: Token? = null
@@ -798,7 +796,6 @@ class AnalizadorSintactico(var listaTokens: ArrayList<Token>) {
 
     /**
      * <esTermino>::= numeroEntero|identificador|cadenaCaracteres
-     * </esTermino>
      */
     fun esTermino(): Termino? {
         if (tokenActual.categoria == Categoria.ENTERO || tokenActual.categoria == Categoria.IDENTIFICADOR_VARIABLE || tokenActual.categoria == Categoria.CADENA_CARACTERES) {
@@ -810,7 +807,6 @@ class AnalizadorSintactico(var listaTokens: ArrayList<Token>) {
 
     /**
      * <ListaArgumentos> ::= <Argumento>[","<ListaArgumentos>]
-     * </ListaArgumentos></Argumento></ListaArgumentos>
      */
     fun esListaArgumentos(): ArrayList<Argumento> {
         var argumentos = ArrayList<Argumento>()
@@ -829,7 +825,6 @@ class AnalizadorSintactico(var listaTokens: ArrayList<Token>) {
 
     /**
      * <Argumento> ::= <Expresion>
-     * </Expresion></Argumento>
      */
     fun esArgumento(): Argumento? {
         var expresion: Expresion? = esExpresion()

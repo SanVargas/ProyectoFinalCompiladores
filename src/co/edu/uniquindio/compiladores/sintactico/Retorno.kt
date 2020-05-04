@@ -1,7 +1,10 @@
 package co.edu.uniquindio.compiladores.sintactico
 import co.edu.uniquindio.compiladores.lexico.Token
 import javafx.scene.control.TreeItem
-
+/**
+ * Clase encargada de crear un retorno
+ * @author Santiago Vargas - Sebastian Ceballos
+ */
 class Retorno(var palabraReservada:Token, var expresion:Expresion?, var finSentencia:Token):Sentencia() {
 
     override fun toString(): String {

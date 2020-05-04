@@ -3,6 +3,11 @@ package co.edu.uniquindio.compiladores.sintactico
 import co.edu.uniquindio.compiladores.lexico.Token
 import javafx.scene.control.TreeItem
 
+
+/**
+ * Clase encargada de crear un valor numerico
+ * @author Santiago Vargas - Sebastian Ceballos
+ */
 class ValorNumerico( var  signo:Token?, var  tipo:Token?) {
 
     override fun toString(): String {

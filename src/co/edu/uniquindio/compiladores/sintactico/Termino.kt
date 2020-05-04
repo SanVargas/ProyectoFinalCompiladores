@@ -2,7 +2,7 @@ package co.edu.uniquindio.compiladores.sintactico
 import co.edu.uniquindio.compiladores.lexico.Token
 import javafx.scene.control.TreeItem
 /**
- * Clase encargada de crear un argumento
+ * Clase encargada de crear un termino
  * @author Santiago Vargas - Sebastian Ceballos
  */
 class Termino(var termino: Token){

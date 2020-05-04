@@ -2,6 +2,11 @@ package co.edu.uniquindio.compiladores.sintactico
 import co.edu.uniquindio.compiladores.lexico.Token
 import javafx.scene.control.TreeItem
 
+
+/**
+ * Clase encargada de crear leer inverso
+ * @author Santiago Vargas - Sebastian Ceballos
+ */
 class LeerInverso(var palabraReservada:Token, var id:Token, var finSentencia:Token):Sentencia() {
 
     override fun toString(): String {

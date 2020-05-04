@@ -4,6 +4,12 @@ import co.edu.uniquindio.compiladores.lexico.Token
 import javafx.scene.control.TreeItem
 import java.util.ArrayList
 
+
+/**
+ * Clase encargada de crear una Invocacion de funcion
+ *
+ * @author Santiago Vargas - Sebastian Ceballos
+ */
 class InvocacionFuncion(var punto: Token, var id:Token, var parIzq:Token, var argumentos: ArrayList<Argumento>, var parDer:Token, var finSentencia:Token):Sentencia() {
 
     override fun toString(): String {
