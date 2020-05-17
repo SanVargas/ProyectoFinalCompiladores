@@ -257,7 +257,7 @@ class AnalizadorSintactico(var listaTokens: ArrayList<Token>) {
                 obtenerSiguienteToken()
                 var expLog = esExpresionLogica()
                 if (expLog != null) {
-                  //  obtenerSiguienteToken()
+                    //  obtenerSiguienteToken()
                     if (tokenActual.categoria == Categoria.PARENTESIS_DERECHO) {
                         var parDer = tokenActual
                         obtenerSiguienteToken()

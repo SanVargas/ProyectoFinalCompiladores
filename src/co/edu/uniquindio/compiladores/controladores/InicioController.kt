@@ -3,6 +3,7 @@ import co.edu.uniquindio.compiladores.sintactico.AnalizadorSintactico
 import co.edu.uniquindio.compiladores.lexico.AnalizadorLexico
 import co.edu.uniquindio.compiladores.lexico.ErrorLexico
 import co.edu.uniquindio.compiladores.lexico.Token
+import co.edu.uniquindio.compiladores.semantico.AnalizadorSemantico
 import co.edu.uniquindio.compiladores.sintactico.ErrorSintactico
 import javafx.collections.FXCollections
 import javafx.event.ActionEvent
@@ -60,15 +61,18 @@ class InicioController : Initializable{
 
             tablaPrincipal.items = FXCollections.observableArrayList(lexico.listaTokens)
             tablaError.items = FXCollections.observableArrayList(lexico.listaErrores)
-            print(lexico.listaTokens)
-            print(lexico.listaErrores)
+          //  print(lexico.listaTokens)
+          //  print(lexico.listaErrores)
             if(lexico.listaErrores.isEmpty()){
                 var sintactico = AnalizadorSintactico(lexico.listaTokens)
                 var uC = sintactico.esUnidadDeCompilacion()
                 tablaErrorSintactico.items = FXCollections.observableArrayList(sintactico.listaErrores)
-                print(lexico.listaErrores)
+             //   print(lexico.listaErrores)
                 if(uC != null){
                     arbolVisual.root = uC.getArbolVisual()
+                    var semantico = AnalizadorSemantico(uC)
+                    semantico.llenarTablaSimbolos()
+                    print(semantico.tablaSimbolos)
                 }else{
                     var alerta = Alert(Alert.AlertType.WARNING)
                     alerta.headerText = "CUIDADO"
