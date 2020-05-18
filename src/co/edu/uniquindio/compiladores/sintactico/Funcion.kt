@@ -1,15 +1,25 @@
 package co.edu.uniquindio.compiladores.sintactico
+
 import co.edu.uniquindio.compiladores.lexico.ErrorLexico
 import co.edu.uniquindio.compiladores.lexico.Token
 import co.edu.uniquindio.compiladores.semantico.TablaSimbolos
 import javafx.scene.control.TreeItem
+
 /**
  * Clase encargada de crear una funcion
  * @author Santiago Vargas - Sebastian Ceballos
  */
-class Funcion(var palabraFun:Token?, var tipoRetorno:Token, var identificador:Token, var parIzq:Token?,
-              var lstParametros:ArrayList<Parametro>, var parDer:Token?, var llaveIzq:Token?, var  lstSentencias:ArrayList<Sentencia>,
-              var llaveDer:Token?) {
+class Funcion(
+    var palabraFun: Token?,
+    var tipoRetorno: Token,
+    var identificador: Token,
+    var parIzq: Token?,
+    var lstParametros: ArrayList<Parametro>,
+    var parDer: Token?,
+    var llaveIzq: Token?,
+    var lstSentencias: ArrayList<Sentencia>,
+    var llaveDer: Token?
+) {
 
     override fun toString(): String {
         return "Funcion(palabraFun=$palabraFun, tipoRetrono=$tipoRetorno, identificador=$identificador, parIzq=$parIzq, " +
@@ -43,25 +53,46 @@ class Funcion(var palabraFun:Token?, var tipoRetorno:Token, var identificador:To
         return lista
     }
 
-    fun llenarTablaSimbolos(tablaSimbolos: TablaSimbolos, erroresSemanticos: ArrayList<ErrorLexico>, ambito:String) {
+    fun llenarTablaSimbolos(tablaSimbolos: TablaSimbolos, erroresSemanticos: ArrayList<ErrorLexico>, ambito: String) {
         if (tipoRetorno != null) {
-            tablaSimbolos.guardarSimboloFuncion(identificador.lexema, tipoRetorno.lexema,obtenerTipoDeParametros())
+            tablaSimbolos.guardarSimboloFuncion(
+                identificador.lexema,
+                tipoRetorno.lexema,
+                obtenerTipoDeParametros(),
+                ambito,
+                identificador.fila,
+                identificador.columna
+            )
         } else {
-            tablaSimbolos.guardarSimboloFuncion(identificador.lexema, null,obtenerTipoDeParametros())
+            tablaSimbolos.guardarSimboloFuncion(
+                identificador.lexema,
+                null,
+                obtenerTipoDeParametros(),
+                ambito,
+                identificador.fila,
+                identificador.columna
+            )
         }
+
         for (parametro in lstParametros) {
-            tablaSimbolos.guardarSimboloVariable(parametro.nombre.lexema, parametro.tipoDato.lexema,
-                identificador.lexema, parametro.nombre.fila, parametro.nombre.columna)
+            tablaSimbolos.guardarSimboloValor(
+                parametro.nombre.lexema,
+                parametro.tipoDato.lexema,
+                identificador.lexema,
+                parametro.nombre.fila,
+                parametro.nombre.columna
+            )
         }
-      //  for (s in lstSentencias) {
-        //  s.llenarTablaSimbolos(tablaSimbolos, erroresSemanticos, identificador.lexema)
-        //}
+
+        for (s in lstSentencias) {
+            s.llenarTablaSimbolos(tablaSimbolos, erroresSemanticos, identificador.lexema)
+        }
     }
 
     fun analizarSemantica(tablaSimbolos: TablaSimbolos, erroresSemanticos: ArrayList<ErrorLexico>) {
-      //  for (s in lstSentencias) {
-       //     s.analizarSemantica(tablaSimbolos, erroresSemanticos, identificador.lexema)
-       // }
+        //  for (s in lstSentencias) {
+        //     s.analizarSemantica(tablaSimbolos, erroresSemanticos, identificador.lexema)
+        // }
 
     }
 }

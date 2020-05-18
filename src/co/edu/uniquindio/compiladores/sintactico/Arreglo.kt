@@ -1,7 +1,9 @@
 package co.edu.uniquindio.compiladores.sintactico
+import co.edu.uniquindio.compiladores.lexico.ErrorLexico
 import co.edu.uniquindio.compiladores.lexico.Token
+import co.edu.uniquindio.compiladores.semantico.TablaSimbolos
 import javafx.scene.control.TreeItem
-import java.util.ArrayList
+import kotlin.collections.ArrayList
 
 /**
  * Clase encargada de crear un arreglo
@@ -24,6 +26,14 @@ class Arreglo(var tipo: Token, var identificador:Token, var lstArgumentos: Array
         }
         raiz.children.add(raizArgumento)
         return raiz
+    }
+
+    override fun llenarTablaSimbolos(
+        tablaSimbolos: TablaSimbolos,
+        listaErrores: ArrayList<ErrorLexico>,
+        ambito: String
+    ) {
+        tablaSimbolos.guardarSimboloValor(identificador.lexema,tipo.lexema,ambito,identificador.fila,identificador.columna)
     }
 
 }

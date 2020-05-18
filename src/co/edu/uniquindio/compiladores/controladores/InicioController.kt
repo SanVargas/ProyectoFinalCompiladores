@@ -73,6 +73,7 @@ class InicioController : Initializable{
                     var semantico = AnalizadorSemantico(uC)
                     semantico.llenarTablaSimbolos()
                     print(semantico.tablaSimbolos)
+                    print(semantico.erroresSemanticos)
                 }else{
                     var alerta = Alert(Alert.AlertType.WARNING)
                     alerta.headerText = "CUIDADO"

@@ -1,6 +1,8 @@
 package co.edu.uniquindio.compiladores.sintactico
 
+import co.edu.uniquindio.compiladores.lexico.ErrorLexico
 import co.edu.uniquindio.compiladores.lexico.Token
+import co.edu.uniquindio.compiladores.semantico.TablaSimbolos
 import javafx.scene.control.TreeItem
 
 /**
@@ -39,4 +41,18 @@ class Condicion(
         return raiz
     }
 
+    override fun llenarTablaSimbolos(
+        tablaSimbolos: TablaSimbolos,
+        listaErrores: ArrayList<ErrorLexico>,
+        ambito: String
+    ) {
+        for (s in sentencias){
+            s.llenarTablaSimbolos(tablaSimbolos,listaErrores,ambito)
+        }
+        if(sentencias != null){
+            for(s in sentencias){
+                s.llenarTablaSimbolos(tablaSimbolos, listaErrores, ambito)
+            }
+        }
+    }
 }

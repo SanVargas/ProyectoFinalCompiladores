@@ -1,5 +1,7 @@
 package co.edu.uniquindio.compiladores.sintactico
+import co.edu.uniquindio.compiladores.lexico.ErrorLexico
 import co.edu.uniquindio.compiladores.lexico.Token
+import co.edu.uniquindio.compiladores.semantico.TablaSimbolos
 import javafx.scene.control.TreeItem
 
 /**
@@ -23,6 +25,17 @@ class Ciclo(var palabraReservada:Token,  var parIzq:Token,  var expresionLogica:
 
         raiz.children.add(expresionLogica.getArbolVisual())
         return raiz
+    }
+
+    override fun llenarTablaSimbolos(
+        tablaSimbolos: TablaSimbolos,
+        listaErrores: ArrayList<ErrorLexico>,
+        ambito: String
+    ) {
+
+        for (s in lstSentencias){
+            s.llenarTablaSimbolos(tablaSimbolos, listaErrores,ambito)
+        }
     }
 
 }
