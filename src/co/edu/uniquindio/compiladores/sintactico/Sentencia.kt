@@ -20,5 +20,8 @@ open abstract class Sentencia() {
 
     }
 
+    open fun analizarSemantica(tablaSimbolos: TablaSimbolos, erroresSemanticos: ArrayList<ErrorLexico>, ambito: String) {
+
+    }
 }
 

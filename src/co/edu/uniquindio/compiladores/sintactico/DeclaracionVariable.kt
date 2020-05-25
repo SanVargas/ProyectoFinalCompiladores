@@ -34,11 +34,6 @@ class DeclaracionVariable(var tipoDato: Token, var identificador: Token, var fin
             identificador.fila,
             identificador.columna
         )
-        /**
-        for (v in listaVariables) {
-        tablaSimbolos.guardarSimboloValor()
-        }
-         */
-    }
 
+    }
 }

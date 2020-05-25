@@ -1,5 +1,7 @@
 package co.edu.uniquindio.compiladores.sintactico
+import co.edu.uniquindio.compiladores.lexico.ErrorLexico
 import co.edu.uniquindio.compiladores.lexico.Token
+import co.edu.uniquindio.compiladores.semantico.TablaSimbolos
 import javafx.scene.control.TreeItem
 /**
  * Clase encargada de crear una expresion cadena
@@ -16,5 +18,18 @@ class ExpresionCadena(var cadena: Token?, var mas: Token?, var expresion: Expres
         var raiz = TreeItem("Expresion Cadena")
         return raiz
     }
+    override fun obtenerTipo(tablaSimbolos: TablaSimbolos, ambito:String): String {
+        return "cad"
+    }
 
+    override fun analizarSemantica(
+        tablaSimbolos: TablaSimbolos,
+        erroresSemanticos: ArrayList<ErrorLexico>,
+        ambito: String
+    ) {
+        if(expresion!= null){
+
+            expresion!!.analizarSemantica(tablaSimbolos, erroresSemanticos, ambito)
+        }
+    }
 }

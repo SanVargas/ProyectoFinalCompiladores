@@ -89,10 +89,16 @@ class Funcion(
         }
     }
 
+    /**
+     * fun entero metodo (){
+    entero numero°
+    numero=9°
+    }
+     */
     fun analizarSemantica(tablaSimbolos: TablaSimbolos, erroresSemanticos: ArrayList<ErrorLexico>) {
-        //  for (s in lstSentencias) {
-        //     s.analizarSemantica(tablaSimbolos, erroresSemanticos, identificador.lexema)
-        // }
+        for (s in lstSentencias) {
+            s.analizarSemantica(tablaSimbolos, erroresSemanticos, identificador.lexema)
+        }
 
     }
 }

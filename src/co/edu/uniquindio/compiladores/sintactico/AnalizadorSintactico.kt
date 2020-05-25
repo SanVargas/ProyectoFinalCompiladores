@@ -327,9 +327,9 @@ class AnalizadorSintactico(var listaTokens: ArrayList<Token>) {
             if (tokenActual.categoria == Categoria.OPERADOR_ASIGNACION) {
                 var opAsignacion = tokenActual
                 obtenerSiguienteToken()
-                var t: Termino? = esTermino()
+                var t: Expresion? = esExpresion()
                 if (t != null) {
-                    obtenerSiguienteToken()
+
                     if (tokenActual.categoria == Categoria.FIN_SENTENCIA) {
                         var finSentencia = tokenActual
                         obtenerSiguienteToken()

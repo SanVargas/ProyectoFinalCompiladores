@@ -1,6 +1,8 @@
 package co.edu.uniquindio.compiladores.sintactico
 
+import co.edu.uniquindio.compiladores.lexico.ErrorLexico
 import co.edu.uniquindio.compiladores.lexico.Token
+import co.edu.uniquindio.compiladores.semantico.TablaSimbolos
 import javafx.scene.control.TreeItem
 
 /**
@@ -29,6 +31,10 @@ class ExpresionLogica() : Expresion() {
     override fun getArbolVisual(): TreeItem<String> {
         var raiz = TreeItem("Expresion Logica")
         return raiz
+    }
+
+    override fun obtenerTipo(tablaSimbolos: TablaSimbolos, ambito:String): String {
+        return "log"
     }
 
 }

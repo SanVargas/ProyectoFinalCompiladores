@@ -1,5 +1,7 @@
 package co.edu.uniquindio.compiladores.sintactico
+import co.edu.uniquindio.compiladores.lexico.ErrorLexico
 import co.edu.uniquindio.compiladores.lexico.Token
+import co.edu.uniquindio.compiladores.semantico.TablaSimbolos
 import javafx.scene.control.TreeItem
 
 /**
@@ -18,4 +20,11 @@ class ImpresionInversa(var palabraReservada: Token, var parIzq:Token, var exp:Ex
         return raiz
     }
 
+    override fun analizarSemantica(
+        tablaSimbolos: TablaSimbolos,
+        erroresSemanticos: ArrayList<ErrorLexico>,
+        ambito: String
+    ) {
+        exp!!.analizarSemantica(tablaSimbolos, erroresSemanticos, ambito)
+    }
 }

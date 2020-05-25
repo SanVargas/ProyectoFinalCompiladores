@@ -16,7 +16,7 @@ class Simbolo {
     var modificable: Boolean = false
     var fila: Int = 0
     var columna: Int = 0
-    var ambito: String? = ""
+    var ambito: String? = null
     var tipoParametros: ArrayList<String>? = null
 
     /**
@@ -34,11 +34,10 @@ class Simbolo {
     /**
      * Constructor para crear uin simbolo de tipo metodo
      */
-    constructor(nombre: String, tipo: String?, tipoParametros: ArrayList<String>, ambito: String, fila: Int, columna: Int){
+    constructor(nombre: String, tipo: String?, tipoParametros: ArrayList<String>, fila: Int, columna: Int){
         this.nombre = nombre
         this.tipo = tipo
         this.tipoParametros = tipoParametros
-        this.ambito = ambito
         this.fila = fila
         this.columna = columna
     }
@@ -53,4 +52,8 @@ class Simbolo {
             "Simbolo(identificador=$nombre, tipoDato=$tipo, ambito=$ambito, tiposParametros=$tipoParametros, fila=$fila, columna=$columna)"
         }
     }
+
+
+
+
 }

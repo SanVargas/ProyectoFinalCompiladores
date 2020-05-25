@@ -17,7 +17,7 @@ class TablaSimbolos (var listaErrores: ArrayList<ErrorLexico>) {
     fun guardarSimboloValor(nombre: String, tipo: String?, ambito: String, fila: Int, columna: Int): Simbolo? {
         val s = buscarSimboloValor(nombre, ambito)
         if (s == null) {
-            val nuevo = Simbolo(nombre, tipo, false, ambito, fila, columna )
+            val nuevo = Simbolo(nombre, tipo,true, ambito, fila, columna )
             listaSimbolos.add(nuevo)
             return nuevo
         } else {
@@ -32,7 +32,7 @@ class TablaSimbolos (var listaErrores: ArrayList<ErrorLexico>) {
     ArrayList<String>, ambito: String, fila: Int, columna: Int): Simbolo? {
         var s = buscarSimboloFuncion(nombre, tipoParametros)
         if (s == null) {
-            var nuevo = Simbolo(nombre, tipo, tipoParametros, ambito, fila, columna)
+            var nuevo = Simbolo(nombre, tipo, tipoParametros, fila, columna)
             listaSimbolos.add(nuevo)
             return nuevo
         } else {

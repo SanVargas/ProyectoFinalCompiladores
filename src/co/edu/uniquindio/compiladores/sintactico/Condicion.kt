@@ -46,12 +46,31 @@ class Condicion(
         listaErrores: ArrayList<ErrorLexico>,
         ambito: String
     ) {
-        for (s in sentencias){
-            s.llenarTablaSimbolos(tablaSimbolos,listaErrores,ambito)
+        for (s in sentencias) {
+            s.llenarTablaSimbolos(tablaSimbolos, listaErrores, ambito)
         }
-        if(sentencias != null){
-            for(s in sentencias){
+        if (sentencias != null) {
+            for (s in sentencias) {
                 s.llenarTablaSimbolos(tablaSimbolos, listaErrores, ambito)
+            }
+        }
+    }
+
+
+    override fun analizarSemantica(
+        tablaSimbolos: TablaSimbolos,
+        erroresSemanticos: ArrayList<ErrorLexico>,
+        ambito: String
+    ) {
+
+        expresionLogica!!.analizarSemantica(tablaSimbolos, erroresSemanticos, ambito)
+        for (s in sentencias) {
+            s.analizarSemantica(tablaSimbolos, erroresSemanticos, ambito)
+        }
+
+        if (sentencias != null) {
+            for (s in sentencias) {
+                s.analizarSemantica(tablaSimbolos, erroresSemanticos, ambito)
             }
         }
     }

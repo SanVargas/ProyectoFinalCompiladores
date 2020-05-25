@@ -35,6 +35,8 @@ class InicioController : Initializable{
     @FXML lateinit var colFilaSintactico: TableColumn<ErrorSintactico, String>
     @FXML lateinit var colColSintactico: TableColumn<ErrorSintactico, String>
 
+
+
     @FXML lateinit var arbolVisual: TreeView<String>
 
 
@@ -58,22 +60,20 @@ class InicioController : Initializable{
         if(txtCodigo.text.length>0){
             var lexico = AnalizadorLexico(txtCodigo.text)
             lexico.analizar()
-
             tablaPrincipal.items = FXCollections.observableArrayList(lexico.listaTokens)
             tablaError.items = FXCollections.observableArrayList(lexico.listaErrores)
-          //  print(lexico.listaTokens)
-          //  print(lexico.listaErrores)
             if(lexico.listaErrores.isEmpty()){
                 var sintactico = AnalizadorSintactico(lexico.listaTokens)
                 var uC = sintactico.esUnidadDeCompilacion()
                 tablaErrorSintactico.items = FXCollections.observableArrayList(sintactico.listaErrores)
-             //   print(lexico.listaErrores)
                 if(uC != null){
                     arbolVisual.root = uC.getArbolVisual()
                     var semantico = AnalizadorSemantico(uC)
                     semantico.llenarTablaSimbolos()
-                    print(semantico.tablaSimbolos)
-                    print(semantico.erroresSemanticos)
+                    semantico.analizarSemantica()
+                    tablaError.items = FXCollections.observableArrayList(semantico.erroresSemanticos)
+
+                    tablaErrorSintactico.items = FXCollections.observableArrayList(sintactico.listaErrores)
                 }else{
                     var alerta = Alert(Alert.AlertType.WARNING)
                     alerta.headerText = "CUIDADO"

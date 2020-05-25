@@ -1,5 +1,7 @@
 package co.edu.uniquindio.compiladores.sintactico
 
+import co.edu.uniquindio.compiladores.lexico.ErrorLexico
+import co.edu.uniquindio.compiladores.semantico.TablaSimbolos
 import javafx.scene.control.TreeItem
 
 /**
@@ -18,4 +20,11 @@ class Argumento(var exp: Expresion?) {
         return raiz
     }
 
+    open fun obtenerTipo(tablaSimbolos: TablaSimbolos, ambito:String): String {
+      return  exp!!.obtenerTipo(tablaSimbolos,ambito)
+    }
+ open fun analizarSemantica(tablaSimbolos: TablaSimbolos, erroresSemanticos: ArrayList<ErrorLexico>, ambito: String){
+     return exp!!.analizarSemantica(tablaSimbolos, erroresSemanticos, ambito)
+
+ }
 }

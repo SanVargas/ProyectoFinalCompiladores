@@ -8,7 +8,7 @@ import javafx.scene.control.TreeItem
  * Clase encargada de crear un valor numerico
  * @author Santiago Vargas - Sebastian Ceballos
  */
-class ValorNumerico( var  signo:Token?, var  tipo:Token?) {
+class ValorNumerico( var  signo:Token?, var  tipo:Token) {
 
     override fun toString(): String {
         return "ValorNumerico(signo=$signo, tipo=$tipo)"

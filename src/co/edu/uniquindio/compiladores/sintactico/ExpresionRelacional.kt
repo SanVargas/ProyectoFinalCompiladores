@@ -1,5 +1,8 @@
 package co.edu.uniquindio.compiladores.sintactico
+
+import co.edu.uniquindio.compiladores.lexico.ErrorLexico
 import co.edu.uniquindio.compiladores.lexico.Token
+import co.edu.uniquindio.compiladores.semantico.TablaSimbolos
 import javafx.scene.control.TreeItem
 
 /**
@@ -8,9 +11,10 @@ import javafx.scene.control.TreeItem
  * @param operador; operador de tipo token
  * @param ea1; ExpresionAritmetica de tipo ExpresionAritmetica
  */
-class ExpresionRelacional(var eA:ExpresionAritmetica?, var operador:Token?, var eA1:ExpresionAritmetica?):Expresion() {
+class ExpresionRelacional(var eA: ExpresionAritmetica?, var operador: Token?, var eA1: ExpresionAritmetica?) :
+    Expresion() {
 
-    constructor(operador: Token?):this(null, operador ,null)
+    constructor(operador: Token?) : this(null, operador, null)
 
     override fun toString(): String {
         return "ExpresionRelacional(eA=$eA,operador=$operador,eA1=$eA1)"
@@ -21,4 +25,24 @@ class ExpresionRelacional(var eA:ExpresionAritmetica?, var operador:Token?, var 
         return raiz
     }
 
+    override fun obtenerTipo(
+        tablaSimbolos: TablaSimbolos,
+        ambito: String
+
+    ): String {
+        return "log "
+    }
+
+    override fun analizarSemantica(
+        tablaSimbolos: TablaSimbolos,
+        erroresSemanticos: ArrayList<ErrorLexico>,
+        ambito: String
+    ) {
+        if (eA != null) {
+            eA!!.analizarSemantica(tablaSimbolos, erroresSemanticos, ambito)
+        } else if (eA != null && eA1 != null) {
+            eA!!.analizarSemantica(tablaSimbolos, erroresSemanticos, ambito)
+            eA1!!.analizarSemantica(tablaSimbolos, erroresSemanticos, ambito)
+        }
+    }
 }

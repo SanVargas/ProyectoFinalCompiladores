@@ -27,6 +27,9 @@ class Ciclo(var palabraReservada:Token,  var parIzq:Token,  var expresionLogica:
         return raiz
     }
 
+    /**
+     *
+     */
     override fun llenarTablaSimbolos(
         tablaSimbolos: TablaSimbolos,
         listaErrores: ArrayList<ErrorLexico>,
@@ -35,6 +38,17 @@ class Ciclo(var palabraReservada:Token,  var parIzq:Token,  var expresionLogica:
 
         for (s in lstSentencias){
             s.llenarTablaSimbolos(tablaSimbolos, listaErrores,ambito)
+        }
+    }
+
+    override fun analizarSemantica(
+        tablaSimbolos: TablaSimbolos,
+        erroresSemanticos: ArrayList<ErrorLexico>,
+        ambito: String
+    ) {
+        expresionLogica.analizarSemantica(tablaSimbolos, erroresSemanticos, ambito)
+        for (s in lstSentencias){
+            s.analizarSemantica(tablaSimbolos, erroresSemanticos,ambito)
         }
     }
 

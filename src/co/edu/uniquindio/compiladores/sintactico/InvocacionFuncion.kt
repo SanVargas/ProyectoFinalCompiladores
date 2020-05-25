@@ -1,8 +1,10 @@
 package co.edu.uniquindio.compiladores.sintactico
 
+import co.edu.uniquindio.compiladores.lexico.ErrorLexico
 import co.edu.uniquindio.compiladores.lexico.Token
+import co.edu.uniquindio.compiladores.semantico.TablaSimbolos
 import javafx.scene.control.TreeItem
-import java.util.ArrayList
+import kotlin.collections.ArrayList
 
 
 /**
@@ -10,7 +12,14 @@ import java.util.ArrayList
  *
  * @author Santiago Vargas - Sebastian Ceballos
  */
-class InvocacionFuncion(var punto: Token, var id:Token, var parIzq:Token, var argumentos: ArrayList<Argumento>, var parDer:Token, var finSentencia:Token):Sentencia() {
+class InvocacionFuncion(
+    var punto: Token,
+    var id: Token,
+    var parIzq: Token,
+    var argumentos: ArrayList<Argumento>,
+    var parDer: Token,
+    var finSentencia: Token
+) : Sentencia() {
 
     override fun toString(): String {
         return "InvocacionFuncion(punto=$punto, id=$id, parIzq=$parIzq, argumentos=$argumentos, parDer=$parDer, finSentencia=$finSentencia)"
@@ -18,15 +27,45 @@ class InvocacionFuncion(var punto: Token, var id:Token, var parIzq:Token, var ar
 
     override fun getArbolVisual(): TreeItem<String> {
         var raiz = TreeItem("Invocacion Funcion")
-        raiz.children.add(TreeItem("Identificador:  ${id?.lexema}" ))
+        raiz.children.add(TreeItem("Identificador:  ${id?.lexema}"))
 
         var raizArgumento = TreeItem("Argumentos")
-        for(p in argumentos){
+        for (p in argumentos) {
             raiz.children.add(p.getArbolVisual())
         }
         raiz.children.add(raizArgumento)
 
         return raiz
+    }
+
+    fun obtenerTiposArgumentos(tablaSimbolos: TablaSimbolos, ambito: String): ArrayList<String> {
+        var listaAgumentos = ArrayList<String>()
+        for (a in argumentos) {
+            listaAgumentos.add(a.obtenerTipo(tablaSimbolos, ambito))
+        }
+        return listaAgumentos
+    }
+
+    override fun analizarSemantica(
+        tablaSimbolos: TablaSimbolos,
+        erroresSemanticos: ArrayList<ErrorLexico>,
+        ambito: String
+    ) {
+
+        var listaArgumentos = obtenerTiposArgumentos(tablaSimbolos, ambito)
+        var s = tablaSimbolos.buscarSimboloFuncion(id.lexema, listaArgumentos)
+
+        if (s == null) {
+
+            erroresSemanticos.add(
+                ErrorLexico(
+                    "LA funcion ${id.lexema} ${listaArgumentos} no exite",
+                    id.fila,
+                    id.columna
+                )
+            )
+
+        }
     }
 
 }
