@@ -103,6 +103,21 @@ class Funcion(
         }
 
     }
+
+    fun getJavaCode(): String {
+        var codigo:String = tipoRetorno.getJavaCode()+" "+identificador.lexema+"("
+
+        for(p in lstParametros){
+            codigo+=p.getJavaCode()+","
+        }
+        codigo=codigo.substring(0, codigo.length-1)
+        codigo+="){"
+        for(s in lstSentencias){
+            codigo+=s.getJavaCode()
+        }
+        codigo+="}"
+        return codigo
+    }
 }
 
 

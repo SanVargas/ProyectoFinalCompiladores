@@ -35,4 +35,13 @@ class UnidadDeCompilacion(var listaFunciones: ArrayList<Funcion>) {
         }
     }
 
+    fun getJavaCode(): String {
+        var codigo = "public class Principal{\n"
+        for (funcion in listaFunciones) {
+            codigo += funcion.getJavaCode()
+        }
+        codigo += "\n}"
+        return codigo
+    }
+
 }

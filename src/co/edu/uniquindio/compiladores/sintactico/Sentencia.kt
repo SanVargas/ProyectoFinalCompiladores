@@ -20,5 +20,9 @@ open abstract class Sentencia() {
     open fun llenarTablaSimbolos(tablaSimbolos: TablaSimbolos, listaErrores: ArrayList<ErrorSemantico>, ambito: Simbolo) {}
 
     open fun analizarSemantica(tablaSimbolos: TablaSimbolos, erroresSemanticos: ArrayList<ErrorSemantico>, ambito: Simbolo) {}
+
+    open fun getJavaCode():String{
+        return ""
+    }
 }
 
