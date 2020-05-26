@@ -42,8 +42,16 @@ class Retorno(var palabraReservada: Token, var expresion: Expresion?, var finSen
         ambito: Simbolo
     ) {
         expresion!!.analizarSemantica(tablaSimbolos, erroresSemanticos, ambito)
-        /**
-         * comprovar que el tipo de la expresion a retornar sea el mismo que el del metodo
-         */
+
+        var tipoExpresion = expresion!!.obtenerTipo(tablaSimbolos, ambito)
+        if (tipoExpresion != ambito.tipo) {
+            erroresSemanticos.add(
+                ErrorSemantico(
+                    "El tipo de dato de la expresion $tipoExpresion no coincide con el metodo ${ambito.nombre} de tipo ${ambito.tipo}",
+                    palabraReservada!!.fila,
+                    palabraReservada!!.columna
+                )
+            )
+        }
     }
 }

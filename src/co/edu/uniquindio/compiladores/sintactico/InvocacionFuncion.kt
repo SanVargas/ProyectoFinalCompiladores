@@ -61,7 +61,7 @@ class InvocacionFuncion(
 
             erroresSemanticos.add(
                 ErrorSemantico(
-                    "LA funcion ${id.lexema} ${listaArgumentos} no exite",
+                    "La funcion ${id.lexema} (${listaArgumentos}) no exite",
                     id.fila,
                     id.columna
                 )

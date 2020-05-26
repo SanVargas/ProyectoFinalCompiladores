@@ -48,9 +48,7 @@ class AsignacionVariable(
         } else {
             var tipo = s.tipo
             if (termino != null) {
-
                 termino!!.analizarSemantica(tablaSimbolos, erroresSemanticos, ambito)
-
                 var tipoExpresion = termino!!.obtenerTipo(tablaSimbolos, ambito)
                 if (tipoExpresion != tipo) {
                     erroresSemanticos.add(
@@ -64,9 +62,7 @@ class AsignacionVariable(
             }
             // falta validar el tipo de retorno de la invocacion de una funcion
             // como no tenemos estructurado el codigo de esta forma no se puede hacer esto
-
+            // nuestra asignacion siempre es una expresion y no se puede hacer una asiganacion de invocacion
         }
-
     }
-
 }

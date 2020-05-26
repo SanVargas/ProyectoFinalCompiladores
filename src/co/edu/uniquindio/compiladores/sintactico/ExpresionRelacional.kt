@@ -32,7 +32,7 @@ class ExpresionRelacional(var eA: ExpresionAritmetica?, var operador: Token?, va
         ambito: Simbolo
 
     ): String {
-        return "log "
+        return "log"
     }
 
     override fun analizarSemantica(
