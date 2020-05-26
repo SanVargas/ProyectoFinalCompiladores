@@ -2,6 +2,8 @@ package co.edu.uniquindio.compiladores.sintactico
 
 import co.edu.uniquindio.compiladores.lexico.ErrorLexico
 import co.edu.uniquindio.compiladores.lexico.Token
+import co.edu.uniquindio.compiladores.semantico.ErrorSemantico
+import co.edu.uniquindio.compiladores.semantico.Simbolo
 import co.edu.uniquindio.compiladores.semantico.TablaSimbolos
 import javafx.scene.control.TreeItem
 
@@ -28,16 +30,16 @@ class Retorno(var palabraReservada: Token, var expresion: Expresion?, var finSen
 
     override fun llenarTablaSimbolos(
         tablaSimbolos: TablaSimbolos,
-        listaErrores: ArrayList<ErrorLexico>,
-        ambito: String
+        listaErrores: ArrayList<ErrorSemantico>,
+        ambito: Simbolo
     ) {
     }
 
 
     override fun analizarSemantica(
         tablaSimbolos: TablaSimbolos,
-        erroresSemanticos: ArrayList<ErrorLexico>,
-        ambito: String
+        erroresSemanticos: ArrayList<ErrorSemantico>,
+        ambito: Simbolo
     ) {
         expresion!!.analizarSemantica(tablaSimbolos, erroresSemanticos, ambito)
         /**

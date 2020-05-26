@@ -2,6 +2,8 @@ package co.edu.uniquindio.compiladores.sintactico
 
 import co.edu.uniquindio.compiladores.lexico.ErrorLexico
 import co.edu.uniquindio.compiladores.lexico.Token
+import co.edu.uniquindio.compiladores.semantico.ErrorSemantico
+import co.edu.uniquindio.compiladores.semantico.Simbolo
 import co.edu.uniquindio.compiladores.semantico.TablaSimbolos
 import javafx.scene.control.TreeItem
 
@@ -53,7 +55,7 @@ class Funcion(
         return lista
     }
 
-    fun llenarTablaSimbolos(tablaSimbolos: TablaSimbolos, erroresSemanticos: ArrayList<ErrorLexico>, ambito: String) {
+    fun llenarTablaSimbolos(tablaSimbolos: TablaSimbolos, erroresSemanticos: ArrayList<ErrorSemantico>, ambito: Simbolo) {
         if (tipoRetorno != null) {
             tablaSimbolos.guardarSimboloFuncion(
                 identificador.lexema,
@@ -75,29 +77,29 @@ class Funcion(
         }
 
         for (parametro in lstParametros) {
+
+            var ambitoFuncion : Simbolo = Simbolo(identificador.lexema,tipoRetorno.lexema,obtenerTipoDeParametros(),identificador.fila,identificador.columna)
             tablaSimbolos.guardarSimboloValor(
                 parametro.nombre.lexema,
                 parametro.tipoDato.lexema,
-                identificador.lexema,
+                ambitoFuncion,
                 parametro.nombre.fila,
                 parametro.nombre.columna
             )
         }
 
         for (s in lstSentencias) {
-            s.llenarTablaSimbolos(tablaSimbolos, erroresSemanticos, identificador.lexema)
+            var ambitoFuncion : Simbolo = Simbolo(identificador.lexema,tipoRetorno.lexema,obtenerTipoDeParametros(),identificador.fila,identificador.columna)
+
+            s.llenarTablaSimbolos(tablaSimbolos, erroresSemanticos, ambitoFuncion)
         }
     }
 
-    /**
-     * fun entero metodo (){
-    entero numero°
-    numero=9°
-    }
-     */
-    fun analizarSemantica(tablaSimbolos: TablaSimbolos, erroresSemanticos: ArrayList<ErrorLexico>) {
+
+    fun analizarSemantica(tablaSimbolos: TablaSimbolos, erroresSemanticos: ArrayList<ErrorSemantico>) {
         for (s in lstSentencias) {
-            s.analizarSemantica(tablaSimbolos, erroresSemanticos, identificador.lexema)
+            var ambitoFuncion : Simbolo = Simbolo(identificador.lexema,tipoRetorno.lexema,obtenerTipoDeParametros(),identificador.fila,identificador.columna)
+            s.analizarSemantica(tablaSimbolos, erroresSemanticos, ambitoFuncion)
         }
 
     }

@@ -4,6 +4,7 @@ import co.edu.uniquindio.compiladores.lexico.AnalizadorLexico
 import co.edu.uniquindio.compiladores.lexico.ErrorLexico
 import co.edu.uniquindio.compiladores.lexico.Token
 import co.edu.uniquindio.compiladores.semantico.AnalizadorSemantico
+import co.edu.uniquindio.compiladores.semantico.ErrorSemantico
 import co.edu.uniquindio.compiladores.sintactico.ErrorSintactico
 import javafx.collections.FXCollections
 import javafx.event.ActionEvent
@@ -35,6 +36,13 @@ class InicioController : Initializable{
     @FXML lateinit var colFilaSintactico: TableColumn<ErrorSintactico, String>
     @FXML lateinit var colColSintactico: TableColumn<ErrorSintactico, String>
 
+    @FXML lateinit var tablaErrorSemantico: TableView<ErrorSemantico>
+    @FXML lateinit var colErrSemantico: TableColumn<ErrorSemantico, String>
+    @FXML lateinit var colFilaSemantico: TableColumn<ErrorSemantico, String>
+    @FXML lateinit var colColSemantico: TableColumn<ErrorSemantico, String>
+
+
+
 
 
     @FXML lateinit var arbolVisual: TreeView<String>
@@ -53,6 +61,10 @@ class InicioController : Initializable{
         colFilaSintactico.cellValueFactory = PropertyValueFactory("fila")
         colColSintactico.cellValueFactory = PropertyValueFactory("columna")
         colErrSintactico.cellValueFactory = PropertyValueFactory("mensaje")
+
+        colFilaSemantico.cellValueFactory = PropertyValueFactory("fila")
+        colColSemantico.cellValueFactory = PropertyValueFactory("columna")
+        colErrSemantico.cellValueFactory = PropertyValueFactory("mensaje")
     }
 
     @FXML
@@ -71,9 +83,9 @@ class InicioController : Initializable{
                     var semantico = AnalizadorSemantico(uC)
                     semantico.llenarTablaSimbolos()
                     semantico.analizarSemantica()
-                    tablaError.items = FXCollections.observableArrayList(semantico.erroresSemanticos)
+                    tablaErrorSemantico.getItems().clear()
+                    tablaErrorSemantico.items = FXCollections.observableArrayList(semantico.erroresSemanticos)
 
-                    tablaErrorSintactico.items = FXCollections.observableArrayList(sintactico.listaErrores)
                 }else{
                     var alerta = Alert(Alert.AlertType.WARNING)
                     alerta.headerText = "CUIDADO"
@@ -86,5 +98,6 @@ class InicioController : Initializable{
     @FXML
     fun limpiar(e: ActionEvent) {
         txtCodigo.clear()
+        tablaErrorSemantico.getItems().clear()
     }
 }

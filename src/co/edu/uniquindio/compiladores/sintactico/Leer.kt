@@ -2,6 +2,8 @@ package co.edu.uniquindio.compiladores.sintactico
 
 import co.edu.uniquindio.compiladores.lexico.ErrorLexico
 import co.edu.uniquindio.compiladores.lexico.Token
+import co.edu.uniquindio.compiladores.semantico.ErrorSemantico
+import co.edu.uniquindio.compiladores.semantico.Simbolo
 import co.edu.uniquindio.compiladores.semantico.TablaSimbolos
 import javafx.scene.control.TreeItem
 
@@ -24,13 +26,13 @@ class Leer(var palabraReservada: Token, var id: Token, var finSentencia: Token) 
 
     override fun analizarSemantica(
         tablaSimbolos: TablaSimbolos,
-        erroresSemanticos: ArrayList<ErrorLexico>,
-        ambito: String
+        erroresSemanticos: ArrayList<ErrorSemantico>,
+        ambito: Simbolo
     ) {
         var s = tablaSimbolos.buscarSimboloValor(id.lexema, ambito)
         if (s == null) {
             erroresSemanticos.add(
-                ErrorLexico(
+                ErrorSemantico(
                     "El campo ${id.lexema} no exite dentro del ambito ${ambito}",
                     id.fila,
                     id.columna

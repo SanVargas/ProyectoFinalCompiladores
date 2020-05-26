@@ -58,6 +58,21 @@
 
             </content>
           </Tab>
+            <Tab text="Error Semantico">
+                <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                        <children>
+                            <TableView fx:id="tablaErrorSemantico" layoutX="2.0" prefHeight="170.0" prefWidth="558.0">
+                                <columns>
+                                    <TableColumn fx:id="colFilaSemantico" prefWidth="50.0" text="FIL" />
+                                    <TableColumn fx:id="colColSemantico" prefWidth="50.0" text="COL" />
+                                    <TableColumn fx:id="colErrSemantico" prefWidth="457.0" text="ERROR" />
+                                </columns>
+                            </TableView>
+                        </children>
+                    </AnchorPane>
+                </content>
+            </Tab>
         </tabs>
       </TabPane>
    </children>

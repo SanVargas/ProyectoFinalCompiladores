@@ -2,6 +2,8 @@ package co.edu.uniquindio.compiladores.sintactico
 
 import co.edu.uniquindio.compiladores.lexico.ErrorLexico
 import co.edu.uniquindio.compiladores.lexico.Token
+import co.edu.uniquindio.compiladores.semantico.ErrorSemantico
+import co.edu.uniquindio.compiladores.semantico.Simbolo
 import co.edu.uniquindio.compiladores.semantico.TablaSimbolos
 import javafx.scene.control.TreeItem
 
@@ -24,8 +26,8 @@ class DeclaracionVariable(var tipoDato: Token, var identificador: Token, var fin
 
     override fun llenarTablaSimbolos(
         tablaSimbolos: TablaSimbolos,
-        listaErrores: ArrayList<ErrorLexico>,
-        ambito: String
+        listaErrores: ArrayList<ErrorSemantico>,
+        ambito: Simbolo
     ) {
         tablaSimbolos.guardarSimboloValor(
             identificador.lexema,
@@ -36,4 +38,18 @@ class DeclaracionVariable(var tipoDato: Token, var identificador: Token, var fin
         )
 
     }
+
+    override fun analizarSemantica(
+        tablaSimbolos: TablaSimbolos,
+        erroresSemanticos: ArrayList<ErrorSemantico>,
+        ambito: Simbolo
+    ) {
+
+        var ambitoVariable = tablaSimbolos.buscarSimboloFuncion(identificador.lexema, ambito.tipoParametros!!)
+
+
+
+    }
+
+
 }

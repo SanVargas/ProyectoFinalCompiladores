@@ -2,6 +2,8 @@ package co.edu.uniquindio.compiladores.sintactico
 
 import co.edu.uniquindio.compiladores.lexico.ErrorLexico
 import co.edu.uniquindio.compiladores.lexico.Token
+import co.edu.uniquindio.compiladores.semantico.ErrorSemantico
+import co.edu.uniquindio.compiladores.semantico.Simbolo
 import co.edu.uniquindio.compiladores.semantico.TablaSimbolos
 import javafx.scene.control.TreeItem
 import kotlin.collections.ArrayList
@@ -31,8 +33,8 @@ class Arreglo(var tipo: Token, var identificador: Token, var lstArgumentos: Arra
 
     override fun llenarTablaSimbolos(
         tablaSimbolos: TablaSimbolos,
-        listaErrores: ArrayList<ErrorLexico>,
-        ambito: String
+        listaErrores: ArrayList<ErrorSemantico>,
+        ambito: Simbolo
     ) {
         tablaSimbolos.guardarSimboloValor(
             identificador.lexema,
@@ -45,8 +47,8 @@ class Arreglo(var tipo: Token, var identificador: Token, var lstArgumentos: Arra
 
     override fun analizarSemantica(
         tablaSimbolos: TablaSimbolos,
-        erroresSemanticos: ArrayList<ErrorLexico>,
-        ambito: String
+        erroresSemanticos: ArrayList<ErrorSemantico>,
+        ambito: Simbolo
     ) {
         for (e in lstArgumentos) {
 
@@ -56,7 +58,7 @@ class Arreglo(var tipo: Token, var identificador: Token, var lstArgumentos: Arra
 
           if (tipoDato != tipo.lexema) {
                 erroresSemanticos.add(
-                    ErrorLexico(
+                    ErrorSemantico(
                         "El tipo de datos de la expresion ($tipoDato) no coincide con el tipo de dato del arreglo (${tipo.lexema}) ",
                         identificador.fila,
                         identificador.columna

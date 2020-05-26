@@ -2,6 +2,8 @@ package co.edu.uniquindio.compiladores.sintactico
 
 import co.edu.uniquindio.compiladores.lexico.ErrorLexico
 import co.edu.uniquindio.compiladores.lexico.Token
+import co.edu.uniquindio.compiladores.semantico.ErrorSemantico
+import co.edu.uniquindio.compiladores.semantico.Simbolo
 import co.edu.uniquindio.compiladores.semantico.TablaSimbolos
 import javafx.scene.control.TreeItem
 
@@ -30,16 +32,14 @@ class AsignacionVariable(
 
     override fun analizarSemantica(
         tablaSimbolos: TablaSimbolos,
-        erroresSemanticos: ArrayList<ErrorLexico>,
-        ambito: String
+        erroresSemanticos: ArrayList<ErrorSemantico>,
+        ambito: Simbolo
     ) {
 
         var s = tablaSimbolos.buscarSimboloValor(identificador!!.lexema, ambito)
-
-
         if (s == null) {
             erroresSemanticos.add(
-                ErrorLexico(
+                ErrorSemantico(
                     "El campo ${identificador!!.lexema} no exite dentro del ambito ${ambito}",
                     identificador!!.fila,
                     identificador!!.columna
@@ -54,7 +54,7 @@ class AsignacionVariable(
                 var tipoExpresion = termino!!.obtenerTipo(tablaSimbolos, ambito)
                 if (tipoExpresion != tipo) {
                     erroresSemanticos.add(
-                        ErrorLexico(
+                        ErrorSemantico(
                             "El tipo de dato de la expresion $tipoExpresion no coincide con el tipo de dato del campo ${identificador!!.lexema} que es $tipo",
                             identificador!!.fila,
                             identificador!!.columna

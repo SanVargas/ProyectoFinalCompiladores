@@ -1,5 +1,7 @@
 package co.edu.uniquindio.compiladores.sintactico
 import co.edu.uniquindio.compiladores.lexico.ErrorLexico
+import co.edu.uniquindio.compiladores.semantico.ErrorSemantico
+import co.edu.uniquindio.compiladores.semantico.Simbolo
 import co.edu.uniquindio.compiladores.semantico.TablaSimbolos
 import javafx.scene.control.TreeItem
 /**
@@ -20,12 +22,14 @@ class UnidadDeCompilacion(var listaFunciones: ArrayList<Funcion>) {
         return raiz
     }
 
-    fun llenarTablaSimbolos(tablaSimbolos: TablaSimbolos, erroresSemanticos: ArrayList<ErrorLexico>) {
+    fun llenarTablaSimbolos(tablaSimbolos: TablaSimbolos, erroresSemanticos: ArrayList<ErrorSemantico>) {
         for (f in listaFunciones) {
-            f.llenarTablaSimbolos(tablaSimbolos, erroresSemanticos, "UnidadCompilacion")
+            var ambitoFuncion : Simbolo = Simbolo("UnidadCompilacion",null,false,null,0,0)
+
+            f.llenarTablaSimbolos(tablaSimbolos, erroresSemanticos,ambitoFuncion )
         }
     }
-    fun analizarSemantica(tablaSimbolos: TablaSimbolos, erroresSemanticos: ArrayList<ErrorLexico>) {
+    fun analizarSemantica(tablaSimbolos: TablaSimbolos, erroresSemanticos: ArrayList<ErrorSemantico>) {
         for (f in listaFunciones) {
             f.analizarSemantica(tablaSimbolos, erroresSemanticos)
         }

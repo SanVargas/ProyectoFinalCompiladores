@@ -2,6 +2,8 @@ package co.edu.uniquindio.compiladores.sintactico
 
 import co.edu.uniquindio.compiladores.lexico.ErrorLexico
 import co.edu.uniquindio.compiladores.lexico.Token
+import co.edu.uniquindio.compiladores.semantico.ErrorSemantico
+import co.edu.uniquindio.compiladores.semantico.Simbolo
 import co.edu.uniquindio.compiladores.semantico.TablaSimbolos
 import javafx.scene.control.TreeItem
 
@@ -43,8 +45,8 @@ class Condicion(
 
     override fun llenarTablaSimbolos(
         tablaSimbolos: TablaSimbolos,
-        listaErrores: ArrayList<ErrorLexico>,
-        ambito: String
+        listaErrores: ArrayList<ErrorSemantico>,
+        ambito: Simbolo
     ) {
         for (s in sentencias) {
             s.llenarTablaSimbolos(tablaSimbolos, listaErrores, ambito)
@@ -59,8 +61,8 @@ class Condicion(
 
     override fun analizarSemantica(
         tablaSimbolos: TablaSimbolos,
-        erroresSemanticos: ArrayList<ErrorLexico>,
-        ambito: String
+        erroresSemanticos: ArrayList<ErrorSemantico>,
+        ambito: Simbolo
     ) {
 
         expresionLogica!!.analizarSemantica(tablaSimbolos, erroresSemanticos, ambito)

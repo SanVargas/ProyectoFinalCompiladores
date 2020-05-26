@@ -1,5 +1,7 @@
 package co.edu.uniquindio.compiladores.semantico
 
+import co.edu.uniquindio.compiladores.sintactico.Parametro
+
 
 /**
  *Clase simbolo la cual permite clasificar cada simbolo
@@ -16,13 +18,13 @@ class Simbolo {
     var modificable: Boolean = false
     var fila: Int = 0
     var columna: Int = 0
-    var ambito: String? = null
+    var ambito: Simbolo? = null
     var tipoParametros: ArrayList<String>? = null
 
     /**
      * Constructor para crear un simbolo de tipo valor
      */
-    constructor(nombre: String?, tipo: String?, modificable: Boolean, ambito: String?, fila: Int, columna: Int){
+    constructor(nombre: String?, tipo: String?, modificable: Boolean, ambito: Simbolo?, fila: Int, columna: Int){
         this.nombre = nombre
         this.tipo = tipo
         this.modificable = modificable

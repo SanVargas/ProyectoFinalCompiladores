@@ -2,6 +2,8 @@ package co.edu.uniquindio.compiladores.sintactico
 
 import co.edu.uniquindio.compiladores.lexico.ErrorLexico
 import co.edu.uniquindio.compiladores.lexico.Token
+import co.edu.uniquindio.compiladores.semantico.ErrorSemantico
+import co.edu.uniquindio.compiladores.semantico.Simbolo
 import co.edu.uniquindio.compiladores.semantico.TablaSimbolos
 import javafx.scene.control.TreeItem
 import kotlin.collections.ArrayList
@@ -38,7 +40,7 @@ class InvocacionFuncion(
         return raiz
     }
 
-    fun obtenerTiposArgumentos(tablaSimbolos: TablaSimbolos, ambito: String): ArrayList<String> {
+    fun obtenerTiposArgumentos(tablaSimbolos: TablaSimbolos, ambito: Simbolo): ArrayList<String> {
         var listaAgumentos = ArrayList<String>()
         for (a in argumentos) {
             listaAgumentos.add(a.obtenerTipo(tablaSimbolos, ambito))
@@ -48,8 +50,8 @@ class InvocacionFuncion(
 
     override fun analizarSemantica(
         tablaSimbolos: TablaSimbolos,
-        erroresSemanticos: ArrayList<ErrorLexico>,
-        ambito: String
+        erroresSemanticos: ArrayList<ErrorSemantico>,
+        ambito: Simbolo
     ) {
 
         var listaArgumentos = obtenerTiposArgumentos(tablaSimbolos, ambito)
@@ -58,7 +60,7 @@ class InvocacionFuncion(
         if (s == null) {
 
             erroresSemanticos.add(
-                ErrorLexico(
+                ErrorSemantico(
                     "LA funcion ${id.lexema} ${listaArgumentos} no exite",
                     id.fila,
                     id.columna

@@ -2,6 +2,8 @@ package co.edu.uniquindio.compiladores.sintactico
 
 import co.edu.uniquindio.compiladores.lexico.ErrorLexico
 import co.edu.uniquindio.compiladores.lexico.Token
+import co.edu.uniquindio.compiladores.semantico.ErrorSemantico
+import co.edu.uniquindio.compiladores.semantico.Simbolo
 import co.edu.uniquindio.compiladores.semantico.TablaSimbolos
 import javafx.scene.control.TreeItem
 
@@ -27,7 +29,7 @@ class ExpresionRelacional(var eA: ExpresionAritmetica?, var operador: Token?, va
 
     override fun obtenerTipo(
         tablaSimbolos: TablaSimbolos,
-        ambito: String
+        ambito: Simbolo
 
     ): String {
         return "log "
@@ -35,8 +37,8 @@ class ExpresionRelacional(var eA: ExpresionAritmetica?, var operador: Token?, va
 
     override fun analizarSemantica(
         tablaSimbolos: TablaSimbolos,
-        erroresSemanticos: ArrayList<ErrorLexico>,
-        ambito: String
+        erroresSemanticos: ArrayList<ErrorSemantico>,
+        ambito: Simbolo
     ) {
         if (eA != null) {
             eA!!.analizarSemantica(tablaSimbolos, erroresSemanticos, ambito)

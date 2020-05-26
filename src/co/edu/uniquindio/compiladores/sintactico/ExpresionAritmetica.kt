@@ -3,6 +3,8 @@ package co.edu.uniquindio.compiladores.sintactico
 import co.edu.uniquindio.compiladores.lexico.Categoria
 import co.edu.uniquindio.compiladores.lexico.ErrorLexico
 import co.edu.uniquindio.compiladores.lexico.Token
+import co.edu.uniquindio.compiladores.semantico.ErrorSemantico
+import co.edu.uniquindio.compiladores.semantico.Simbolo
 import co.edu.uniquindio.compiladores.semantico.TablaSimbolos
 import javafx.scene.control.TreeItem
 
@@ -52,7 +54,7 @@ class ExpresionAritmetica() : Expresion() {
 
     override fun obtenerTipo(
         tablaSimbolos: TablaSimbolos,
-        ambito: String
+        ambito: Simbolo
     ): String {
         if (expresionAritmetica1 != null && expresionAritmetica2 != null) {
             var tipo1 = expresionAritmetica1!!.obtenerTipo(tablaSimbolos, ambito)
@@ -85,7 +87,7 @@ class ExpresionAritmetica() : Expresion() {
 
     fun obtenerTipoCampo(
         valorNumerico: ValorNumerico?,
-        ambito: String,
+        ambito: Simbolo,
         tablaSimbolos: TablaSimbolos
     ): String {
         if (valorNumerico!!.tipo.categoria == Categoria.ENTERO) {
@@ -104,8 +106,8 @@ class ExpresionAritmetica() : Expresion() {
 
     override fun analizarSemantica(
         tablaSimbolos: TablaSimbolos,
-        erroresSemanticos: ArrayList<ErrorLexico>,
-        ambito: String
+        erroresSemanticos: ArrayList<ErrorSemantico>,
+        ambito: Simbolo
     ) {
         if (valorNumerico != null) {
             if (valorNumerico!!.tipo.categoria == Categoria.IDENTIFICADOR_VARIABLE) {
@@ -113,7 +115,7 @@ class ExpresionAritmetica() : Expresion() {
                 if (simbolo == null) {
 // capturar el tipo y preguntar si es numerico
                     erroresSemanticos.add(
-                        ErrorLexico(
+                        ErrorSemantico(
                             "El campo ${valorNumerico!!.tipo.lexema} no existe dentro del ambito $ambito",
                             valorNumerico!!.tipo.fila,
                             valorNumerico!!.tipo.columna
