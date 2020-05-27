@@ -12,14 +12,52 @@ import javafx.scene.control.TreeItem
  * @author Santiago Vargas - Sebastian Ceballos
  */
 class AsignacionVariable(
-    var identificador: Token?,
-    var opAsignacion: Token?,
-    var termino: Expresion?,
-    var finSentencia: Token?
+
 ) : Sentencia() {
 
+    var identificador: Token? = null
+    var opAsignacion: Token? = null
+    var termino: Expresion? = null
+    var invocacion: InvocacionFuncion?=null
+    var finSentencia: Token? = null
+
+    constructor(
+        identificador: Token?,
+        opAsignacion: Token?,
+        termino: Expresion?,
+        finSentencia: Token?
+    ) : this() {
+        this.identificador = identificador
+        this.opAsignacion = opAsignacion
+        this.termino = termino
+        this.finSentencia = finSentencia
+
+
+    }
+    constructor(
+        identificador: Token?,
+        opAsignacion: Token?,
+        invocacion: InvocacionFuncion?,
+        finSentencia: Token?
+    ) : this() {
+        this.identificador = identificador
+        this.opAsignacion = opAsignacion
+        this.invocacion = invocacion
+        this.finSentencia = finSentencia
+
+
+    }
+
+
     override fun toString(): String {
-        return "AsignacionVariable(identificador=$identificador,opAsignacion=$opAsignacion,termino=$termino,finSentencia=$finSentencia)"
+        if(termino != null) {
+            return "AsignacionVariable(identificador=$identificador,opAsignacion=$opAsignacion,termino=$termino,finSentencia=$finSentencia)"
+
+        }else{
+
+            return "AsignacionVariable(identificador=$identificador,opAsignacion=$opAsignacion,invocacion=$invocacion,finSentencia=$finSentencia)"
+
+        }
     }
 
     override fun getArbolVisual(): TreeItem<String> {
@@ -59,10 +97,28 @@ class AsignacionVariable(
                         )
                     )
                 }
+            }else if(invocacion !=null){
+               var funcion=tablaSimbolos.buscarSimboloFuncion(invocacion!!.id.lexema,obtenerTipoDeParametros(tablaSimbolos, ambito))
+                if(tipo != funcion!!.tipo){
+
+                    erroresSemanticos.add(
+                        ErrorSemantico(
+                            "El tipo de dato de la funcion ${funcion.nombre} (${funcion.tipo}) no coincide con el tipo de dato de la variable ${identificador!!.lexema} que es  $tipo",
+                            identificador!!.fila,
+                            identificador!!.columna
+                        )
+                    )
+                }
+
             }
-            // falta validar el tipo de retorno de la invocacion de una funcion
-            // como no tenemos estructurado el codigo de esta forma no se puede hacer esto
-            // nuestra asignacion siempre es una expresion y no se puede hacer una asiganacion de invocacion
         }
+    }
+
+    fun obtenerTipoDeParametros(tablaSimbolos: TablaSimbolos,ambito: Simbolo): ArrayList<String> {
+        var lista = ArrayList<String>()
+        for (p in invocacion!!.argumentos) {
+            lista.add(p.obtenerTipo(tablaSimbolos,ambito))
+        }
+        return lista
     }
 }

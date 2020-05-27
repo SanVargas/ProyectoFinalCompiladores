@@ -324,21 +324,36 @@ class AnalizadorSintactico(var listaTokens: ArrayList<Token>) {
         if (tokenActual.categoria == Categoria.IDENTIFICADOR_VARIABLE) {
             var id = tokenActual
             obtenerSiguienteToken()
+
             if (tokenActual.categoria == Categoria.OPERADOR_ASIGNACION) {
                 var opAsignacion = tokenActual
                 obtenerSiguienteToken()
-                var t: Expresion? = esExpresion()
-                if (t != null) {
-
+                var auxPosicion = posicionActual
+                var invocacionFuncion: InvocacionFuncion? = esInvocacion()
+                if (invocacionFuncion != null) {
+                    obtenerSiguienteToken()
                     if (tokenActual.categoria == Categoria.FIN_SENTENCIA) {
                         var finSentencia = tokenActual
                         obtenerSiguienteToken()
-                        return AsignacionVariable(id, opAsignacion, t, finSentencia)
+                        return AsignacionVariable(id, opAsignacion, invocacionFuncion, finSentencia)
                     } else {
                         reportarErrores("Falta fin de sentencia en la asginacion")
                     }
                 } else {
-                    reportarErrores("Falta el termino que se asigna en la asginacion")
+                    posicionActual = auxPosicion
+                    var t: Expresion? = esExpresion()
+                    if (t != null) {
+
+                        if (tokenActual.categoria == Categoria.FIN_SENTENCIA) {
+                            var finSentencia = tokenActual
+                            obtenerSiguienteToken()
+                            return AsignacionVariable(id, opAsignacion, t, finSentencia)
+                        } else {
+                            reportarErrores("Falta fin de sentencia en la asginacion")
+                        }
+                    } else {
+                        reportarErrores("Falta el termino que se asigna en la asginacion")
+                    }
                 }
             } else {
                 reportarErrores("Falta operador de asignacion en la asginacion")
