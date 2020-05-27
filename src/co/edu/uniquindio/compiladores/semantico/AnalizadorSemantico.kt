@@ -8,17 +8,17 @@ import co.edu.uniquindio.compiladores.sintactico.UnidadDeCompilacion
  * fun entero metodo ( decimal numero, entero numer) {}
  *
  */
-class AnalizadorSemantico(var uc: UnidadDeCompilacion) {
+class AnalizadorSemantico(var uc: UnidadDeCompilacion?) {
 
     var erroresSemanticos: ArrayList<ErrorSemantico> = ArrayList()
     var tablaSimbolos: TablaSimbolos = TablaSimbolos(erroresSemanticos)
 
     fun llenarTablaSimbolos() {
-        uc.llenarTablaSimbolos(tablaSimbolos, erroresSemanticos)
+        uc?.llenarTablaSimbolos(tablaSimbolos, erroresSemanticos)
     }
 
     fun analizarSemantica() {
-        uc.analizarSemantica(tablaSimbolos, erroresSemanticos)
+        uc?.analizarSemantica(tablaSimbolos, erroresSemanticos)
     }
 
 

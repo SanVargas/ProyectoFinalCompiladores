@@ -105,17 +105,26 @@ class Funcion(
     }
 
     fun getJavaCode(): String {
-        var codigo:String = tipoRetorno.getJavaCode()+" "+identificador.lexema+"("
-
-        for(p in lstParametros){
-            codigo+=p.getJavaCode()+","
+        var codigo: String = ""
+        if (identificador.lexema == "main") {
+            codigo = "public static void main(String[] args){"
+        } else {
+            codigo = "static " + tipoRetorno.getJavaCode() + " " + identificador.lexema
+            if(lstParametros.size == 0) {
+                codigo+="( ){"
+            }else {
+                codigo += "("
+                for (p in lstParametros) {
+                    codigo += p.getJavaCode() + ","
+                }
+                codigo = codigo.substring(0, codigo.length - 1)
+                codigo += "){"
+            }
         }
-        codigo=codigo.substring(0, codigo.length-1)
-        codigo+="){"
-        for(s in lstSentencias){
-            codigo+=s.getJavaCode()
+        for (s in lstSentencias) {
+            codigo += s.getJavaCode()
         }
-        codigo+="}"
+        codigo += "}"
         return codigo
     }
 }

@@ -58,22 +58,27 @@ class Condicion(
         }
     }
 
-
     override fun analizarSemantica(
         tablaSimbolos: TablaSimbolos,
         erroresSemanticos: ArrayList<ErrorSemantico>,
-        ambito: Simbolo
-    ) {
-
+        ambito: Simbolo) {
         expresionLogica!!.analizarSemantica(tablaSimbolos, erroresSemanticos, ambito)
         for (s in sentencias) {
             s.analizarSemantica(tablaSimbolos, erroresSemanticos, ambito)
         }
-
         if (sentencias != null) {
             for (s in sentencias) {
                 s.analizarSemantica(tablaSimbolos, erroresSemanticos, ambito)
             }
         }
+    }
+
+    override fun getJavaCode(): String {
+        var codigo:String = "while ("+expresionLogica?.getJavaCode()+"){"
+        for(s in sentencias){
+            codigo = s.getJavaCode()
+        }
+        codigo+="}"
+        return codigo
     }
 }

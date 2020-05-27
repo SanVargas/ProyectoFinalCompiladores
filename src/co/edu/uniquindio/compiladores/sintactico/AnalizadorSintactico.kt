@@ -758,16 +758,16 @@ class AnalizadorSintactico(var listaTokens: ArrayList<Token>) {
         val vl = esExpresionRelacional()
         if (vl != null) {
             if (tokenActual.categoria == Categoria.OPERADOR_LOGICO && (tokenActual.lexema == "&&" || tokenActual.lexema == "||")) {
-                val operadorLogico = tokenActual
+                var operadorLogico = tokenActual
                 obtenerSiguienteToken()
-                val expresionLogica = esExpresionLogica()
+                var expresionLogica = esExpresionLogica()
                 if (expresionLogica != null) {
                     return ExpresionLogica(vl, operadorLogico, expresionLogica)
                 }
             } else if (tokenActual.categoria == Categoria.OPERADOR_LOGICO && (tokenActual.lexema == "!")) {
-                val operadorNegacion = tokenActual
+                var operadorNegacion = tokenActual
                 obtenerSiguienteToken()
-                val expresionLogica = esExpresionLogica()
+                var expresionLogica = esExpresionLogica()
                 if (expresionLogica != null) {
                     return ExpresionLogica(vl, operadorNegacion, expresionLogica)
                 }

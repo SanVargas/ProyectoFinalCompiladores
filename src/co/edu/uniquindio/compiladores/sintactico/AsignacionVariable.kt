@@ -65,4 +65,8 @@ class AsignacionVariable(
             // nuestra asignacion siempre es una expresion y no se puede hacer una asiganacion de invocacion
         }
     }
+
+    override fun getJavaCode(): String {
+        return identificador?.lexema +" "+ opAsignacion?.lexema +" "+ finSentencia?.getJavaCode()
+    }
 }
