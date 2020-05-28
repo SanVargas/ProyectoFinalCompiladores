@@ -23,7 +23,7 @@ class AnalizadorSintactico(var listaTokens: ArrayList<Token>) {
      * Funcion que nos permite ir cambiando de posicion en la lista de tokens
      */
     fun obtenerSiguienteToken() {
-        posicionActual++;
+        posicionActual++
         if (posicionActual < listaTokens.size) {
             tokenActual = listaTokens[posicionActual]
         }
@@ -44,7 +44,9 @@ class AnalizadorSintactico(var listaTokens: ArrayList<Token>) {
         var listaFunciones: ArrayList<Funcion> = esListaFunciones()
         return if (listaFunciones.size > 0) {
             UnidadDeCompilacion(listaFunciones)
-        } else null
+        } else {
+            null
+        }
     }
 
     /**
@@ -69,6 +71,7 @@ class AnalizadorSintactico(var listaTokens: ArrayList<Token>) {
             listaFunciones.add(funcion)
             funcion = esFuncion()
         }
+
         return listaFunciones
     }
 
@@ -80,53 +83,53 @@ class AnalizadorSintactico(var listaTokens: ArrayList<Token>) {
             var func = tokenActual
             obtenerSiguienteToken()
             if (estipoDato()) {
-                var tipoRetorno = tokenActual
+            } else {
+                reportarErrores("Falta tipo de retorno")
+            }
+            var tipoRetorno = tokenActual
+            obtenerSiguienteToken()
+            if (tokenActual.categoria == Categoria.IDENTIFICADOR_VARIABLE) {
+                var identificador = tokenActual
                 obtenerSiguienteToken()
-                if (tokenActual.categoria == Categoria.IDENTIFICADOR_VARIABLE) {
-                    var identificador = tokenActual
-                    obtenerSiguienteToken()
-                    if (tokenActual.categoria == Categoria.PARENTESIS_IZQUIERDO) {
-                        var parIzq = tokenActual
-                        obtenerSiguienteToken()
-                        var parametros: ArrayList<Parametro> = esListaDeParametro()
-                        if (tokenActual.categoria == Categoria.PARENTESIS_DERECHO) {
-                            var parDer = tokenActual
-                            obtenerSiguienteToken()
-                            if (tokenActual.categoria == Categoria.LLAVE_IZQUIERDA) {
-                                var llaveIzq = tokenActual
-                                obtenerSiguienteToken()
-                                var sentencias = esListaSentencias()
-                                if (tokenActual.categoria == Categoria.LLAVE_DERECHA) {
-                                    var llaveDer = tokenActual
-                                    obtenerSiguienteToken()
-                                    return Funcion(
-                                        func,
-                                        tipoRetorno,
-                                        identificador,
-                                        parIzq,
-                                        parametros,
-                                        parDer,
-                                        llaveIzq,
-                                        sentencias,
-                                        llaveDer
-                                    )
-                                } else {
-                                    reportarErrores("Falta llave derechaa")
-                                }
-                            } else {
-                                reportarErrores("Falta llave izquierda")
-                            }
-                        } else {
-                            reportarErrores("Falta parentesis derecho")
-                        }
-                    } else {
-                        reportarErrores("Falta parentesis izquierdo")
-                    }
+                if (tokenActual.categoria == Categoria.PARENTESIS_IZQUIERDO) {
+                } else {
+                    reportarErrores("Falta parentesis izquierdo")
+                }
+                var parIzq = tokenActual
+                obtenerSiguienteToken()
+                var parametros: ArrayList<Parametro> = esListaDeParametro()
+                if (tokenActual.categoria == Categoria.PARENTESIS_DERECHO) {
                 } else {
                     reportarErrores("Falta el nombre de la función")
                 }
-            } else {
-                reportarErrores("Falta tipo de retorno")
+                var parDer = tokenActual
+                obtenerSiguienteToken()
+                if (tokenActual.categoria == Categoria.LLAVE_IZQUIERDA) {
+                } else {
+                    reportarErrores("Falta llave izquierda")
+                }
+                var llaveIzq = tokenActual
+                obtenerSiguienteToken()
+                var sentencias = esListaSentencias()
+
+                if (tokenActual.categoria == Categoria.LLAVE_DERECHA) {
+
+                } else {
+                    reportarErrores("Falta llave derechaa")
+                }
+                var llaveDer = tokenActual
+                obtenerSiguienteToken()
+                return Funcion(
+                    func,
+                    tipoRetorno,
+                    identificador,
+                    parIzq,
+                    parametros,
+                    parDer,
+                    llaveIzq,
+                    sentencias,
+                    llaveDer
+                )
             }
         }
         return null
@@ -249,44 +252,48 @@ class AnalizadorSintactico(var listaTokens: ArrayList<Token>) {
      *
      */
     fun esCondicion(): Condicion? {
+        var posicionAux = posicionActual
+
         if (tokenActual.categoria == Categoria.PALABRA_RESERVADA && tokenActual.lexema == "si") {
             var palabraReservada = tokenActual
             obtenerSiguienteToken()
             if (tokenActual.categoria == Categoria.PARENTESIS_IZQUIERDO) {
-                var parIzq = tokenActual
-                obtenerSiguienteToken()
-                var expLog = esExpresionLogica()
-                if (expLog != null) {
-                    //  obtenerSiguienteToken()
-                    if (tokenActual.categoria == Categoria.PARENTESIS_DERECHO) {
-                        var parDer = tokenActual
-                        obtenerSiguienteToken()
-                        if (tokenActual.categoria == Categoria.LLAVE_IZQUIERDA) {
-                            var llaveIzq = tokenActual
-                            obtenerSiguienteToken()
-                            var sentencias = esListaSentencias()
-                            if (tokenActual.categoria == Categoria.LLAVE_DERECHA) {
-                                var llaveDer = tokenActual
-                                obtenerSiguienteToken()
-                                return Condicion(
-                                    palabraReservada, parIzq, expLog, parDer, llaveIzq,
-                                    sentencias, llaveDer
-                                )
-                            } else {
-                                reportarErrores("Falta llave derecha en la condicion")
-                            }
-                        } else {
-                            reportarErrores("Falta llave izquierda en la condicion")
-                        }
-                    } else {
-                        reportarErrores("Falta parentesis derecho en la condicion")
-                    }
-                } else {
-                    reportarErrores("Falta expresion logica en la condicion")
-                }
             } else {
                 reportarErrores("Falta parentesis izquierdo en la condicion")
             }
+            var parIzq = tokenActual
+            obtenerSiguienteToken()
+            var expLog = esExpresionLogica()
+            if (expLog != null) {
+            } else {
+                reportarErrores("Falta expresion logica en la condicion")
+                while (tokenActual.categoria == Categoria.PARENTESIS_DERECHO) {
+                    obtenerSiguienteToken()
+                }
+            }
+            if (tokenActual.categoria == Categoria.PARENTESIS_DERECHO) {
+            } else {
+                reportarErrores("Falta parentesis derecho en la condicion")
+            }
+            var parDer = tokenActual
+            obtenerSiguienteToken()
+            if (tokenActual.categoria == Categoria.LLAVE_IZQUIERDA) {
+            } else {
+                reportarErrores("Falta llave izquierda en la condicion")
+            }
+            var llaveIzq = tokenActual
+            obtenerSiguienteToken()
+            var sentencias = esListaSentencias()
+            if (tokenActual.categoria == Categoria.LLAVE_DERECHA) {
+            } else {
+                reportarErrores("Falta llave derecha en la condicion")
+            }
+            var llaveDer = tokenActual
+            obtenerSiguienteToken()
+            return Condicion(
+                palabraReservada, parIzq, expLog, parDer, llaveIzq,
+                sentencias, llaveDer
+            )
         }
         return null
     }
@@ -328,19 +335,18 @@ class AnalizadorSintactico(var listaTokens: ArrayList<Token>) {
             if (tokenActual.categoria == Categoria.OPERADOR_ASIGNACION) {
                 var opAsignacion = tokenActual
                 obtenerSiguienteToken()
+
                 var auxPosicion = posicionActual
                 var invocacionFuncion: InvocacionFuncion? = esInvocacion()
+
+
                 if (invocacionFuncion != null) {
-                    obtenerSiguienteToken()
-                    if (tokenActual.categoria == Categoria.FIN_SENTENCIA) {
-                        var finSentencia = tokenActual
-                        obtenerSiguienteToken()
-                        return AsignacionVariable(id, opAsignacion, invocacionFuncion, finSentencia)
-                    } else {
-                        reportarErrores("Falta fin de sentencia en la asginacion")
-                    }
+                    return AsignacionVariable(id, opAsignacion, invocacionFuncion)
+
                 } else {
+
                     posicionActual = auxPosicion
+
                     var t: Expresion? = esExpresion()
                     if (t != null) {
 
@@ -524,7 +530,15 @@ class AnalizadorSintactico(var listaTokens: ArrayList<Token>) {
                             if (tokenActual.categoria == Categoria.LLAVE_DERECHA) {
                                 var llaveDer = tokenActual
                                 obtenerSiguienteToken()
-                                return Ciclo(palabraReservada, parIzq, expLog, parDer, llaveIzq, sentencias, llaveDer)
+                                return Ciclo(
+                                    palabraReservada,
+                                    parIzq,
+                                    expLog,
+                                    parDer,
+                                    llaveIzq,
+                                    sentencias,
+                                    llaveDer
+                                )
                             } else {
                                 reportarErrores("Falta llave derecha en el ciclo")
                             }
@@ -700,6 +714,7 @@ class AnalizadorSintactico(var listaTokens: ArrayList<Token>) {
     fun esExpresionRelacional(): ExpresionRelacional? {
         var operador: Token? = null
         val ea: ExpresionAritmetica? = esExpresionAritmetica()
+
         if (ea != null) {
             if (tokenActual.categoria == Categoria.OPERADOR_RELACIONAL) {
                 operador = tokenActual
@@ -771,6 +786,7 @@ class AnalizadorSintactico(var listaTokens: ArrayList<Token>) {
      */
     fun esExpresionLogica(): ExpresionLogica? {
         val vl = esExpresionRelacional()
+
         if (vl != null) {
             if (tokenActual.categoria == Categoria.OPERADOR_LOGICO && (tokenActual.lexema == "&&" || tokenActual.lexema == "||")) {
                 val operadorLogico = tokenActual
@@ -803,10 +819,11 @@ class AnalizadorSintactico(var listaTokens: ArrayList<Token>) {
             obtenerSiguienteToken()
         }
         if (tokenActual.categoria == Categoria.ENTERO || tokenActual.categoria == Categoria.DECIMAL || tokenActual.categoria == Categoria.IDENTIFICADOR_VARIABLE) {
-            val termino = tokenActual
+            var termino = tokenActual
             return ValorNumerico(signo, termino)
+        } else {
+            return null
         }
-        return null
     }
 
     /**

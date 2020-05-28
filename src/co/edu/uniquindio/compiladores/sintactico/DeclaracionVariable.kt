@@ -29,6 +29,7 @@ class DeclaracionVariable(var tipoDato: Token, var identificador: Token, var fin
         listaErrores: ArrayList<ErrorSemantico>,
         ambito: Simbolo
     ) {
+
         tablaSimbolos.guardarSimboloValor(
             identificador.lexema,
             tipoDato.lexema,
@@ -44,8 +45,6 @@ class DeclaracionVariable(var tipoDato: Token, var identificador: Token, var fin
         erroresSemanticos: ArrayList<ErrorSemantico>,
         ambito: Simbolo
     ) {
-
-        var ambitoVariable = tablaSimbolos.buscarSimboloFuncion(identificador.lexema, ambito.tipoParametros!!)
 
 
 
