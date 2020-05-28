@@ -104,7 +104,6 @@ class Condicion(
         }
     }
 
-
     fun obtenerIdentificador(): ArrayList<String> {
         var lista = ArrayList<String>()
 
@@ -121,6 +120,7 @@ class Condicion(
         codigo+="}else{}"
         return codigo
     }
+
 
 
 }

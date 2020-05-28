@@ -40,7 +40,6 @@ class ExpresionCadena(): Expresion() {
         ambito: Simbolo
     ) {
         if(expresion!= null){
-
             expresion!!.analizarSemantica(tablaSimbolos, erroresSemanticos, ambito)
         }
     }
@@ -56,5 +55,6 @@ class ExpresionCadena(): Expresion() {
             return cadena?.getJavaCode()+"+"+expresion?.getJavaCode()
         }
         return codigo
+
     }
 }
