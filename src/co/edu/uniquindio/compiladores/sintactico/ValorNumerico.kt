@@ -18,4 +18,8 @@ class ValorNumerico( var  signo:Token?, var  tipo:Token) {
         return TreeItem("Tipo: ${tipo?.lexema} : Signo:  ${signo?.lexema} ")
     }
 
+    fun getJavaCode():String{
+        return signo?.lexema + tipo.lexema
+    }
+
 }

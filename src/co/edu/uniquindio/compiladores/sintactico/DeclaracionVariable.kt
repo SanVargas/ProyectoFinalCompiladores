@@ -51,5 +51,8 @@ class DeclaracionVariable(var tipoDato: Token, var identificador: Token, var fin
 
     }
 
+    override fun getJavaCode(): String {
+        return tipoDato.getJavaCode() +" "+ identificador.lexema + finSentencia.getJavaCode()
+    }
 
 }

@@ -114,11 +114,16 @@ class AsignacionVariable(
         }
     }
 
+    override fun getJavaCode(): String {
+        return identificador?.lexema + " " + opAsignacion?.lexema + " " + finSentencia?.getJavaCode()
+    }
+
     fun obtenerTipoDeParametros(tablaSimbolos: TablaSimbolos,ambito: Simbolo): ArrayList<String> {
         var lista = ArrayList<String>()
         for (p in invocacion!!.argumentos) {
             lista.add(p.obtenerTipo(tablaSimbolos,ambito))
         }
         return lista
+
     }
 }

@@ -324,36 +324,21 @@ class AnalizadorSintactico(var listaTokens: ArrayList<Token>) {
         if (tokenActual.categoria == Categoria.IDENTIFICADOR_VARIABLE) {
             var id = tokenActual
             obtenerSiguienteToken()
-
             if (tokenActual.categoria == Categoria.OPERADOR_ASIGNACION) {
                 var opAsignacion = tokenActual
                 obtenerSiguienteToken()
-                var auxPosicion = posicionActual
-                var invocacionFuncion: InvocacionFuncion? = esInvocacion()
-                if (invocacionFuncion != null) {
-                    obtenerSiguienteToken()
+                var t: Expresion? = esExpresion()
+                if (t != null) {
+
                     if (tokenActual.categoria == Categoria.FIN_SENTENCIA) {
                         var finSentencia = tokenActual
                         obtenerSiguienteToken()
-                        return AsignacionVariable(id, opAsignacion, invocacionFuncion, finSentencia)
+                        return AsignacionVariable(id, opAsignacion, t, finSentencia)
                     } else {
                         reportarErrores("Falta fin de sentencia en la asginacion")
                     }
                 } else {
-                    posicionActual = auxPosicion
-                    var t: Expresion? = esExpresion()
-                    if (t != null) {
-
-                        if (tokenActual.categoria == Categoria.FIN_SENTENCIA) {
-                            var finSentencia = tokenActual
-                            obtenerSiguienteToken()
-                            return AsignacionVariable(id, opAsignacion, t, finSentencia)
-                        } else {
-                            reportarErrores("Falta fin de sentencia en la asginacion")
-                        }
-                    } else {
-                        reportarErrores("Falta el termino que se asigna en la asginacion")
-                    }
+                    reportarErrores("Falta el termino que se asigna en la asginacion")
                 }
             } else {
                 reportarErrores("Falta operador de asignacion en la asginacion")
@@ -773,16 +758,16 @@ class AnalizadorSintactico(var listaTokens: ArrayList<Token>) {
         val vl = esExpresionRelacional()
         if (vl != null) {
             if (tokenActual.categoria == Categoria.OPERADOR_LOGICO && (tokenActual.lexema == "&&" || tokenActual.lexema == "||")) {
-                val operadorLogico = tokenActual
+                var operadorLogico = tokenActual
                 obtenerSiguienteToken()
-                val expresionLogica = esExpresionLogica()
+                var expresionLogica = esExpresionLogica()
                 if (expresionLogica != null) {
                     return ExpresionLogica(vl, operadorLogico, expresionLogica)
                 }
             } else if (tokenActual.categoria == Categoria.OPERADOR_LOGICO && (tokenActual.lexema == "!")) {
-                val operadorNegacion = tokenActual
+                var operadorNegacion = tokenActual
                 obtenerSiguienteToken()
-                val expresionLogica = esExpresionLogica()
+                var expresionLogica = esExpresionLogica()
                 if (expresionLogica != null) {
                     return ExpresionLogica(vl, operadorNegacion, expresionLogica)
                 }

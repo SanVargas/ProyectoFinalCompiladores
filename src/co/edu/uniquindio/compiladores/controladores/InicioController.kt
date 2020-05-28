@@ -22,7 +22,7 @@ class InicioController : Initializable{
     lateinit var lexico:AnalizadorLexico
     lateinit var sintactico:AnalizadorSintactico
     lateinit var semantico:AnalizadorSemantico
-    lateinit var uC:UnidadDeCompilacion
+    var uC:UnidadDeCompilacion?=null
 
     @FXML lateinit var txtCodigo:TextArea
     @FXML lateinit var txtJavaCodigo:TextArea
@@ -79,10 +79,11 @@ class InicioController : Initializable{
             tablaError.items = FXCollections.observableArrayList(lexico.listaErrores)
             if(lexico.listaErrores.isEmpty()){
                 sintactico = AnalizadorSintactico(lexico.listaTokens)
-                uC = sintactico.esUnidadDeCompilacion()!!
+                uC = sintactico.esUnidadDeCompilacion()
                 tablaErrorSintactico.items = FXCollections.observableArrayList(sintactico.listaErrores)
-                if(uC != null){
-                    arbolVisual.root = uC.getArbolVisual()
+                print(sintactico.listaErrores)
+                if(uC!=null){
+                    arbolVisual.root = uC?.getArbolVisual()
                     semantico = AnalizadorSemantico(uC)
                     semantico.llenarTablaSimbolos()
                     semantico.analizarSemantica()
@@ -98,7 +99,7 @@ class InicioController : Initializable{
     @FXML
     fun traducirCodigo(e:ActionEvent){
         if(uC != null){
-            var codigo:String = uC.getJavaCode()
+            var codigo:String = uC?.getJavaCode()!!
             println(codigo)
             txtJavaCodigo.appendText(codigo)
         }
