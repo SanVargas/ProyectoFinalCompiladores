@@ -67,4 +67,10 @@ class Arreglo(var tipo: Token, var identificador: Token, var lstArgumentos: Arra
             }
         }
     }
+// [] tipoDato identificador {1,2,3}°
+    //tipo identificador[] = {1,2,3]
+
+    override fun getJavaCode(): String {
+        return identificador.lexema +" "+ "= "
+    }
 }

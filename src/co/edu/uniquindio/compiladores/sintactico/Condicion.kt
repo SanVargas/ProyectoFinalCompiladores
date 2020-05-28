@@ -79,13 +79,21 @@ class Condicion(
         }
     }
 
-
     fun obtenerIdentificador(): ArrayList<String> {
         var lista = ArrayList<String>()
 
         lista.add(""+(palabraReservada!!.fila))
         lista.add(""+(palabraReservada!!.columna))
         return lista
+    }
+
+    override fun getJavaCode(): String {
+        var codigo:String = "if ("+expresionLogica?.getJavaCode()+"){"
+        for(s in sentencias){
+            codigo = s.getJavaCode()
+        }
+        codigo+="else{}}"
+        return codigo
     }
 
 }

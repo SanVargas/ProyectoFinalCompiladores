@@ -38,4 +38,8 @@ class ExpresionLogica() : Expresion() {
         return "log"
     }
 
+    override fun getJavaCode(): String {
+        return super.getJavaCode()
+    }
+
 }

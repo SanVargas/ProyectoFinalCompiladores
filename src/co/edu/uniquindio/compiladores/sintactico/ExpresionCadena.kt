@@ -30,8 +30,11 @@ class ExpresionCadena(var cadena: Token?, var mas: Token?, var expresion: Expres
         ambito: Simbolo
     ) {
         if(expresion!= null){
-
             expresion!!.analizarSemantica(tablaSimbolos, erroresSemanticos, ambito)
         }
+    }
+
+    override fun getJavaCode(): String {
+        return ""
     }
 }
