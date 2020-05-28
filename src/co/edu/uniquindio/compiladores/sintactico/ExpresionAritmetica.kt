@@ -131,12 +131,4 @@ class ExpresionAritmetica() : Expresion() {
             expresionAritmetica2!!.analizarSemantica(tablaSimbolos, erroresSemanticos, ambito)
         }
     }
-
-    override fun getJavaCode(): String {
-        if(expresionAritmetica1 != null && expresionAritmetica2 != null) {
-            return expresionAritmetica1?.getJavaCode() + operador?.lexema + expresionAritmetica1?.getJavaCode()
-        } else {
-            return valorNumerico!!.getJavaCode()
-        }
-    }
 }

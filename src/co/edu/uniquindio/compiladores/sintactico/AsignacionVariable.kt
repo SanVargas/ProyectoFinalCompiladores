@@ -11,13 +11,40 @@ import javafx.scene.control.TreeItem
  * Clase encargada de crear un argumento
  * @author Santiago Vargas - Sebastian Ceballos
  */
-class AsignacionVariable(
-    var identificador: Token?,
-    var opAsignacion: Token?,
-    var termino: Expresion?,
-    var finSentencia: Token?
-) : Sentencia() {
+class AsignacionVariable() : Sentencia() {
 
+    var identificador: Token? = null
+    var opAsignacion: Token? = null
+    var termino: Expresion? = null
+    var invocacion: InvocacionFuncion?=null
+    var finSentencia: Token? = null
+
+    constructor(
+        identificador: Token?,
+        opAsignacion: Token?,
+        termino: Expresion?,
+        finSentencia: Token?
+    ) : this() {
+        this.identificador = identificador
+        this.opAsignacion = opAsignacion
+        this.termino = termino
+        this.finSentencia = finSentencia
+
+
+    }
+    constructor(
+        identificador: Token?,
+        opAsignacion: Token?,
+        invocacion: InvocacionFuncion?
+
+    ) : this() {
+        this.identificador = identificador
+        this.opAsignacion = opAsignacion
+        this.invocacion = invocacion
+
+
+
+    }
     override fun toString(): String {
         return "AsignacionVariable(identificador=$identificador,opAsignacion=$opAsignacion,termino=$termino,finSentencia=$finSentencia)"
     }
@@ -66,7 +93,29 @@ class AsignacionVariable(
         }
     }
 
-    override fun getJavaCode(): String {
-        return identificador?.lexema +" "+ opAsignacion?.lexema +" "+ finSentencia?.getJavaCode()
+    fun obtenerTipoDeParametros(tablaSimbolos: TablaSimbolos,ambito: Simbolo): ArrayList<String> {
+        var lista = ArrayList<String>()
+        for (p in invocacion!!.argumentos) {
+            lista.add(p.obtenerTipo(tablaSimbolos,ambito))
+        }
+        return lista
     }
+
+    /**   override fun getJavaCode(): String {
+    return identificador?.lexema +" "+ opAsignacion?.lexema +" "+ finSentencia?.getJavaCode()
+    } else if(invocacion !=null){
+    var funcion=tablaSimbolos.buscarSimboloFuncion(invocacion!!.id.lexema,obtenerTipoDeParametros(tablaSimbolos, ambito))
+    if(tipo != funcion!!.tipo){
+    erroresSemanticos.add(
+    ErrorSemantico(
+    "El tipo de dato de la funcion ${funcion.nombre} (${funcion.tipo}) no coincide con el tipo de dato de la variable ${identificador!!.lexema} que es  $tipo",
+    identificador!!.fila,
+    identificador!!.columna
+    )
+    )
+    }
+    }
+
+    }
+    }*/
 }

@@ -28,6 +28,13 @@ class Ciclo(var palabraReservada:Token,  var parIzq:Token,  var expresionLogica:
         raiz.children.add(expresionLogica.getArbolVisual())
         return raiz
     }
+    fun obtenerIdentificador(): ArrayList<String> {
+        var lista = ArrayList<String>()
+
+        lista.add(""+(palabraReservada!!.fila))
+        lista.add(""+(palabraReservada!!.columna))
+        return lista
+    }
 
     /**
      *
@@ -37,9 +44,10 @@ class Ciclo(var palabraReservada:Token,  var parIzq:Token,  var expresionLogica:
         listaErrores: ArrayList<ErrorSemantico>,
         ambito: Simbolo
     ) {
+        var ambitoCiclo: Simbolo = Simbolo(palabraReservada!!.lexema,null,obtenerIdentificador(),palabraReservada!!.fila,palabraReservada!!.columna)
 
         for (s in lstSentencias){
-            s.llenarTablaSimbolos(tablaSimbolos, listaErrores,ambito)
+            s.llenarTablaSimbolos(tablaSimbolos, listaErrores,ambitoCiclo)
         }
     }
 
@@ -52,15 +60,6 @@ class Ciclo(var palabraReservada:Token,  var parIzq:Token,  var expresionLogica:
         for (s in lstSentencias){
             s.analizarSemantica(tablaSimbolos, erroresSemanticos,ambito)
         }
-    }
-
-    override fun getJavaCode(): String {
-        var codigo:String = "if ("+expresionLogica?.getJavaCode()+"){"
-        for(s in lstSentencias){
-            codigo = s.getJavaCode()
-        }
-        codigo+="else{}}"
-        return codigo
     }
 
 }
