@@ -68,7 +68,7 @@ class AsignacionVariable() : Sentencia() {
         if (s == null) {
             erroresSemanticos.add(
                 ErrorSemantico(
-                    "El campo ${identificador!!.lexema} no exite dentro del ambito ${ambito}",
+                    "El campo ${identificador!!.lexema} no existe dentro del ambito ${ambito.nombre}",
                     identificador!!.fila,
                     identificador!!.columna
                 )

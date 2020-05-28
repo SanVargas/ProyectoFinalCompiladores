@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="604.0" prefWidth="892.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.compiladores.controladores.InicioController">
+<AnchorPane prefHeight="604.0" prefWidth="892.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.compiladores.controladores.InicioController">
    <children>
       <Button fx:id="btnTraducir" layoutX="474.0" layoutY="95.0" mnemonicParsing="false" onAction="#traducirCodigo" prefHeight="25.0" prefWidth="120.0" text="TRADUCIR JAVA" />
       <Button fx:id="btnLimpiar" layoutX="474.0" layoutY="170.0" mnemonicParsing="false" onAction="#limpiar" prefHeight="25.0" prefWidth="120.0" text="LIMPIAR" />
