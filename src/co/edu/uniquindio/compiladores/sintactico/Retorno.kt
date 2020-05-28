@@ -41,9 +41,15 @@ class Retorno(var palabraReservada: Token, var expresion: Expresion?, var finSen
         erroresSemanticos: ArrayList<ErrorSemantico>,
         ambito: Simbolo
     ) {
-        expresion!!.analizarSemantica(tablaSimbolos, erroresSemanticos, ambito)
+        var tipoExpresion =null
+        if(expresion != null) {
+            expresion!!.analizarSemantica(tablaSimbolos, erroresSemanticos, ambito)
+            var tipoExpresion = expresion!!.obtenerTipo(tablaSimbolos, ambito)
+        }else{
+            erroresSemanticos.add(ErrorSemantico("La expresion del retorno de ambito ${ambito.nombre} tiene un error",palabraReservada.fila,palabraReservada.columna))
 
-        var tipoExpresion = expresion!!.obtenerTipo(tablaSimbolos, ambito)
+        }
+
         if (tipoExpresion != ambito.tipo) {
             erroresSemanticos.add(
                 ErrorSemantico(
@@ -54,4 +60,10 @@ class Retorno(var palabraReservada: Token, var expresion: Expresion?, var finSen
             )
         }
     }
+
+
+    override fun getJavaCode(): String {
+        return palabraReservada?.getJavaCode()+" "+ expresion?.getJavaCode()+";"
+    }
+
 }

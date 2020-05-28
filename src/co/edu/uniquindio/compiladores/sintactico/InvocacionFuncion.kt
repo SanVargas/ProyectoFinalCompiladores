@@ -70,4 +70,17 @@ class InvocacionFuncion(
         }
     }
 
+    override fun getJavaCode(): String {
+        var codigo=""
+        codigo+="."+id.lexema+"("
+        if(argumentos.isNotEmpty()){
+            for(a in argumentos) {
+                codigo += a.getJavaCode()
+            }
+        }
+        codigo+=");"
+        return codigo
+    }
+
+
 }

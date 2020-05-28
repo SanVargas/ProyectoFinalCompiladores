@@ -120,13 +120,23 @@ class InicioController : Initializable {
     @FXML
     fun traducirCodigo(e: ActionEvent) {
         if (uC != null) {
+            var borrar = 1
             var codigo: String = uC.getJavaCode()
             txtJavaCodigo.appendText(codigo)
+            if(borrar==1){
+                txtJavaCodigo.clear()
+                var codigo: String = uC.getJavaCode()
+                txtJavaCodigo.appendText(codigo)
+            }
         }
     }
-
     @FXML
     fun limpiar(e: ActionEvent) {
+        tablaPrincipal.items.clear()
+        tablaError.items.clear()
+        tablaErrorSintactico.items.clear()
+        tablaErrorSemantico.items.clear()
+        txtJavaCodigo.clear()
         txtCodigo.clear()
     }
 }

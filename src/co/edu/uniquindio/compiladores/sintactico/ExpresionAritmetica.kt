@@ -116,7 +116,7 @@ class ExpresionAritmetica() : Expresion() {
 // capturar el tipo y preguntar si es numerico
                     erroresSemanticos.add(
                         ErrorSemantico(
-                            "El campo ${valorNumerico!!.tipo.lexema} no existe dentro del ambito $ambito",
+                            "El campo ${valorNumerico!!.tipo.lexema} no existe dentro del ambito ${ambito.nombre}",
                             valorNumerico!!.tipo.fila,
                             valorNumerico!!.tipo.columna
                         )
@@ -131,4 +131,24 @@ class ExpresionAritmetica() : Expresion() {
             expresionAritmetica2!!.analizarSemantica(tablaSimbolos, erroresSemanticos, ambito)
         }
     }
+
+    /**
+     * aritmetica1 opAritmetico arimetica2
+    aritmetica1
+    valornumerico opAritmetico aritmetica2
+    valornumerico
+     */
+    override fun getJavaCode(): String {
+        var codigo =""
+        if(expresionAritmetica1!=null && expresionAritmetica2 !=null){
+            return expresionAritmetica1?.getJavaCode()+operador?.lexema+expresionAritmetica2?.getJavaCode()
+        }else if(expresionAritmetica1!=null){
+            return ""+expresionAritmetica1?.getJavaCode()
+        }else if(valorNumerico!=null) {
+            return ""+valorNumerico?.getJavaCode()
+        }
+        return codigo
+    }
+
+
 }

@@ -29,7 +29,9 @@ class Argumento(var exp: Expresion?) {
      return exp!!.analizarSemantica(tablaSimbolos, erroresSemanticos, ambito)
 
  }
+
     fun getJavaCode(): String{
         return ""+exp?.getJavaCode()
     }
+
 }

@@ -30,4 +30,8 @@ class Impresion(var palabraReser: Token?, var parIzq: Token?, var expresion: Exp
     ) {
         expresion!!.analizarSemantica(tablaSimbolos, erroresSemanticos, ambito)
     }
+
+    override fun getJavaCode(): String {
+        return palabraReser?.getJavaCode() +"("+expresion?.getJavaCode()+");"
+    }
 }

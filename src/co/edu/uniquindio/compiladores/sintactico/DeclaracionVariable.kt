@@ -37,18 +37,10 @@ class DeclaracionVariable(var tipoDato: Token, var identificador: Token, var fin
             identificador.fila,
             identificador.columna
         )
-
     }
 
-    override fun analizarSemantica(
-        tablaSimbolos: TablaSimbolos,
-        erroresSemanticos: ArrayList<ErrorSemantico>,
-        ambito: Simbolo
-    ) {
-
-
-
+    override fun getJavaCode(): String {
+        return tipoDato.getJavaCode()+" "+identificador.lexema+";"
     }
-
 
 }

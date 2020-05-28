@@ -221,7 +221,7 @@ class AnalizadorLexico(var codigoFuente: String) {
             if (lexema == "fun" || lexema == "si"|| lexema == "imprimir" || lexema == "impInversa" || lexema == "retorno"
                 || lexema == "leer" || lexema == "leerInverso"|| lexema=="entero"|| lexema=="decimal"|| lexema=="vacio"
                 || lexema=="verdadero" || lexema=="falso"
-                || lexema == "log" || lexema == "dom" || lexema == "mientras"|| lexema == "cad" || lexema == "imp") {
+                || lexema == "log" || lexema == "dom" || lexema == "mientras"|| lexema == "entonces"|| lexema == "cadena" || lexema == "imp") {
                 obtenerSiguienteCaracter()
                 if (!caracterActual.isDigit() || !caracterActual.isLetter()) {
 

@@ -67,4 +67,14 @@ class Arreglo(var tipo: Token, var identificador: Token, var lstArgumentos: Arra
             }
         }
     }
+
+    override fun getJavaCode(): String {
+        var codigo = tipo.getJavaCode()+" "+identificador.lexema +" "+ "= {"
+        for(a in lstArgumentos){
+            codigo+=a.getJavaCode()+","
+        }
+        codigo = codigo.substring(0, codigo.length - 1)
+        codigo += "};"
+        return codigo
+    }
 }

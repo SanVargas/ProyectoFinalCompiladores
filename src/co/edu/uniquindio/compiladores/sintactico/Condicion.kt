@@ -16,13 +16,14 @@ class Condicion(
     var parIzq: Token?,
     var expresionLogica: ExpresionLogica?,
     var parDer: Token?,
+    var finCodigo: Token?,
     var llaIzq: Token?,
     var sentencias: ArrayList<Sentencia>,
     var llaDer: Token?
 ) : Sentencia() {
 
     override fun toString(): String {
-        return "Condicion(palabraReservada=$palabraReservada,parIzq=$parIzq,expresionLogica=$expresionLogica, parDer=$parDer, llaIzq=$llaIzq" +
+        return "Condicion(palabraReservada=$palabraReservada,parIzq=$parIzq,expresionLogica=$expresionLogica, parDer=$parDer,finCodigo=$finCodigo, llaIzq=$llaIzq" +
                 " sentencias=$sentencias, llaDer=$llaDer)"
     }
 
@@ -49,11 +50,18 @@ class Condicion(
         ambito: Simbolo
     ) {
 
-        var ambitoCondicion: Simbolo = Simbolo(palabraReservada!!.lexema,null,obtenerIdentificador(),palabraReservada!!.fila,palabraReservada!!.columna)
+        var ambitoCondicion: Simbolo = Simbolo(
+            palabraReservada!!.lexema,
+            null,
+            obtenerIdentificador(),
+            palabraReservada!!.fila,
+            palabraReservada!!.columna
+        )
 
         for (s in sentencias) {
             s.llenarTablaSimbolos(tablaSimbolos, listaErrores, ambitoCondicion)
         }
+
 
         //hay que programar el else de la condicion
     }
@@ -64,9 +72,26 @@ class Condicion(
         erroresSemanticos: ArrayList<ErrorSemantico>,
         ambito: Simbolo
     ) {
+        if (expresionLogica != null) {
+            expresionLogica!!.analizarSemantica(tablaSimbolos, erroresSemanticos, ambito)
+        } else {
 
-        expresionLogica!!.analizarSemantica(tablaSimbolos, erroresSemanticos, ambito)
-        var ambitoCondicion: Simbolo = Simbolo(palabraReservada!!.lexema,null,obtenerIdentificador(),palabraReservada!!.fila,palabraReservada!!.columna)
+            erroresSemanticos.add(
+                ErrorSemantico(
+                    "Hay un error con la expresion logica de la condicion en el ambito ${ambito.nombre}",
+                    palabraReservada!!.fila,
+                    palabraReservada!!.columna
+                )
+            )
+        }
+
+        var ambitoCondicion: Simbolo = Simbolo(
+            palabraReservada!!.lexema,
+            null,
+            obtenerIdentificador(),
+            palabraReservada!!.fila,
+            palabraReservada!!.columna
+        )
 
         for (s in sentencias) {
             s.analizarSemantica(tablaSimbolos, erroresSemanticos, ambitoCondicion)
@@ -83,9 +108,19 @@ class Condicion(
     fun obtenerIdentificador(): ArrayList<String> {
         var lista = ArrayList<String>()
 
-        lista.add(""+(palabraReservada!!.fila))
-        lista.add(""+(palabraReservada!!.columna))
+        lista.add("" + (palabraReservada!!.fila))
+        lista.add("" + (palabraReservada!!.columna))
         return lista
     }
+
+    override fun getJavaCode(): String {
+        var codigo:String = "if ("+expresionLogica?.getJavaCode()+"){"
+        for(s in sentencias){
+            codigo+= s.getJavaCode()
+        }
+        codigo+="}else{}"
+        return codigo
+    }
+
 
 }

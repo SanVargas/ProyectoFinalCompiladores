@@ -10,7 +10,7 @@ import javafx.scene.control.TreeItem
  * Clase encargada de crear un ciclo
  * @author Santiago Vargas - Sebastian Ceballos
  */
-class Ciclo(var palabraReservada:Token,  var parIzq:Token,  var expresionLogica:ExpresionLogica,  var parDer:Token, var llaveIzq:Token, var lstSentencias:ArrayList<Sentencia>,  var llaveDer:Token):Sentencia(){
+class Ciclo(var palabraReservada:Token,  var parIzq:Token,  var expresionLogica:ExpresionLogica?,  var parDer:Token, var llaveIzq:Token, var lstSentencias:ArrayList<Sentencia>,  var llaveDer:Token):Sentencia(){
 
     override fun toString(): String {
         return "Ciclo(palabraReservada=$palabraReservada, parIzq=$parIzq, expresionLogica=$expresionLogica, parDer=$parDer, llaveIzq=$llaveIzq, lstSentencias=$lstSentencias, laveDer=$llaveDer)"
@@ -24,8 +24,7 @@ class Ciclo(var palabraReservada:Token,  var parIzq:Token,  var expresionLogica:
             raizSentencia.children.add(s.getArbolVisual())
         }
         raiz.children.add(raizSentencia)
-
-        raiz.children.add(expresionLogica.getArbolVisual())
+       // raiz.children.add(expresionLogica!!.getArbolVisual())
         return raiz
     }
     fun obtenerIdentificador(): ArrayList<String> {
@@ -44,6 +43,7 @@ class Ciclo(var palabraReservada:Token,  var parIzq:Token,  var expresionLogica:
         listaErrores: ArrayList<ErrorSemantico>,
         ambito: Simbolo
     ) {
+
         var ambitoCiclo: Simbolo = Simbolo(palabraReservada!!.lexema,null,obtenerIdentificador(),palabraReservada!!.fila,palabraReservada!!.columna)
 
         for (s in lstSentencias){
@@ -56,10 +56,26 @@ class Ciclo(var palabraReservada:Token,  var parIzq:Token,  var expresionLogica:
         erroresSemanticos: ArrayList<ErrorSemantico>,
         ambito: Simbolo
     ) {
-        expresionLogica.analizarSemantica(tablaSimbolos, erroresSemanticos, ambito)
+        if(expresionLogica !=null){
+        expresionLogica!!.analizarSemantica(tablaSimbolos, erroresSemanticos, ambito)
+        }else {
+
+            erroresSemanticos.add(ErrorSemantico("Hay un error con la expresion logica de la condicion en el ambito ${ambito.nombre}",palabraReservada.fila,palabraReservada.columna))
+        }
+
         for (s in lstSentencias){
             s.analizarSemantica(tablaSimbolos, erroresSemanticos,ambito)
         }
+    }
+
+
+    override fun getJavaCode(): String {
+        var codigo:String = "while ("+expresionLogica!!.getJavaCode()+"){"
+        for(s in lstSentencias){
+            codigo = s.getJavaCode()
+        }
+        codigo+="}"
+        return codigo
     }
 
 }

@@ -15,10 +15,20 @@ open abstract class Expresion() {
     open fun getArbolVisual(): TreeItem<String>? {
         return null
     }
-    open fun obtenerTipo(tablaSimbolos: TablaSimbolos,ambito:Simbolo): String {
+
+    open fun obtenerTipo(tablaSimbolos: TablaSimbolos, ambito: Simbolo): String {
         return ""
     }
 
-    open fun analizarSemantica(tablaSimbolos: TablaSimbolos, erroresSemanticos: ArrayList<ErrorSemantico>, ambito: Simbolo){
+    open fun analizarSemantica(
+        tablaSimbolos: TablaSimbolos,
+        erroresSemanticos: ArrayList<ErrorSemantico>,
+        ambito: Simbolo
+    ) {
+    }
+
+
+    open fun getJavaCode(): String {
+        return ""
     }
 }

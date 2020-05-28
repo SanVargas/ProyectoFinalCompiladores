@@ -29,4 +29,12 @@ class ImpresionInversa(var palabraReservada: Token, var parIzq:Token, var exp:Ex
     ) {
         exp!!.analizarSemantica(tablaSimbolos, erroresSemanticos, ambito)
     }
+
+    override fun getJavaCode(): String {
+        var codigo=""
+        var variable = exp?.getJavaCode()?.replace(";", "")
+        codigo+=" String ivertida =\"\";\n for (int i ="+ variable+".length()-1; i>=0; i--){\n" +
+        "       palabrainvertida +="+variable+".charAt(i);\n}"
+        return codigo
+    }
 }

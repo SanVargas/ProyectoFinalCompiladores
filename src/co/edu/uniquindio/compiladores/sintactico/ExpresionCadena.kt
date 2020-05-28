@@ -9,9 +9,19 @@ import javafx.scene.control.TreeItem
  * Clase encargada de crear una expresion cadena
  * @author Santiago Vargas - Sebastian Ceballos
  */
-class ExpresionCadena(var cadena: Token?, var mas: Token?, var expresion: Expresion?): Expresion() {
-    constructor(cadena:Token):this(cadena,null,null){}
+class ExpresionCadena(): Expresion() {
+    var cadena: Token?=null
+    var mas: Token?=null
+    var expresion: Expresion?=null
 
+    constructor(cadena: Token?, mas: Token?, expresion: Expresion?):this(){
+        this.cadena=cadena
+        this.mas=mas
+        this.expresion=expresion
+    }
+    constructor(cadena:Token):this(){
+        this.cadena=cadena
+    }
     override fun toString(): String {
         return "ExpresionCadena(cadena=$cadena, mas=$mas, expresion=$expresion)"
     }
@@ -21,7 +31,7 @@ class ExpresionCadena(var cadena: Token?, var mas: Token?, var expresion: Expres
         return raiz
     }
     override fun obtenerTipo(tablaSimbolos: TablaSimbolos, ambito: Simbolo): String {
-        return "cad"
+        return "cadena"
     }
 
     override fun analizarSemantica(
@@ -33,5 +43,18 @@ class ExpresionCadena(var cadena: Token?, var mas: Token?, var expresion: Expres
 
             expresion!!.analizarSemantica(tablaSimbolos, erroresSemanticos, ambito)
         }
+    }
+
+    override fun getJavaCode(): String {
+        var codigo=""
+        codigo += cadena?.lexema
+        //codigo.replace("«", "\"")
+        //codigo.replace("»", "\"")
+        if(expresion!=null){
+            //cadena?.lexema?.replace("«", "\"")
+            //cadena?.lexema?.replace("»", "\"")
+            return cadena?.getJavaCode()+"+"+expresion?.getJavaCode()
+        }
+        return codigo
     }
 }

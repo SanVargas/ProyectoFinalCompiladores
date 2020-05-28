@@ -15,6 +15,8 @@ class Termino(var termino: Token){
         return TreeItem("Termino: ${termino?.lexema}")
     }
 
-
+    fun getJavaCode():String{
+        return termino.lexema
+    }
 
 }

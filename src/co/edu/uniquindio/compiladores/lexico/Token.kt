@@ -18,13 +18,13 @@ class Token(var lexema:String, var categoria: Categoria, var fila:Int, var colum
                 "decimal" -> {return "double"}
                 "log" -> {return "boolean"}
                 "si" -> {return "if"}
-                "imprimir" -> {return "print"}
+                "imprimir" -> {return "System.out.println"}
                 "retorno" -> {return "return"}
                 "vacio" -> {return "void"}
                 "verdadero" -> {return "true"}
                 "falso" -> {return "false"}
                 "mientras" -> {return "while"}
-                "cad" -> {return "String"}
+                "cadena" -> {return "String"}
             }
             }else if(categoria==Categoria.FIN_SENTENCIA){
             return ";"
@@ -36,7 +36,7 @@ class Token(var lexema:String, var categoria: Categoria, var fila:Int, var colum
             lexema.replace("_", "\"")
             return lexema
         }
-        return "null"
+        return "INDEFINIDO"
         }
     }
 /**

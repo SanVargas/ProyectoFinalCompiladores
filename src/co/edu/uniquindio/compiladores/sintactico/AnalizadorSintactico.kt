@@ -26,6 +26,8 @@ class AnalizadorSintactico(var listaTokens: ArrayList<Token>) {
         posicionActual++
         if (posicionActual < listaTokens.size) {
             tokenActual = listaTokens[posicionActual]
+        } else {
+            tokenActual = Token("", Categoria.FIN_CODIGO, tokenActual.fila, tokenActual.columna)
         }
     }
 
@@ -248,7 +250,7 @@ class AnalizadorSintactico(var listaTokens: ArrayList<Token>) {
     }
 
     /**
-     * <esCondicion>::= si "(" <esExpresionLogica> ")" "{" [<esListaSentencias>] "}"
+     * <esCondicion>::= si "(" <esExpresionLogica> ")" entonces "{" [<esListaSentencias>] "}"
      *
      */
     fun esCondicion(): Condicion? {
@@ -264,20 +266,37 @@ class AnalizadorSintactico(var listaTokens: ArrayList<Token>) {
             var parIzq = tokenActual
             obtenerSiguienteToken()
             var expLog = esExpresionLogica()
+            var iden=0
+            var parDer:Token?=null
             if (expLog != null) {
             } else {
                 reportarErrores("Falta expresion logica en la condicion")
+                while (!(tokenActual.categoria == Categoria.PALABRA_RESERVADA && tokenActual.lexema == "entonces") && tokenActual.categoria != Categoria.FIN_CODIGO) {
+                    iden=0
+                    if(tokenActual.categoria == Categoria.PARENTESIS_DERECHO){
+                        iden=1
+                        parDer=tokenActual
 
-
-                while (tokenActual.categoria == Categoria.PARENTESIS_DERECHO) {
+                    }
                     obtenerSiguienteToken()
                 }
             }
-            if (tokenActual.categoria == Categoria.PARENTESIS_DERECHO) {
+
+            if (tokenActual.categoria == Categoria.PARENTESIS_DERECHO||iden ==1) {
             } else {
                 reportarErrores("Falta parentesis derecho en la condicion")
             }
-            var parDer = tokenActual
+            parDer = tokenActual
+
+            if(!(tokenActual.categoria == Categoria.PALABRA_RESERVADA && tokenActual.lexema == "entonces")){
+                obtenerSiguienteToken()
+            }
+
+            if (tokenActual.categoria == Categoria.PALABRA_RESERVADA && tokenActual.lexema == "entonces") {
+            } else {
+                reportarErrores("Falta fin de codigo")
+            }
+            var finCodigo = tokenActual
             obtenerSiguienteToken()
             if (tokenActual.categoria == Categoria.LLAVE_IZQUIERDA) {
             } else {
@@ -293,7 +312,7 @@ class AnalizadorSintactico(var listaTokens: ArrayList<Token>) {
             var llaveDer = tokenActual
             obtenerSiguienteToken()
             return Condicion(
-                palabraReservada, parIzq, expLog, parDer, llaveIzq,
+                palabraReservada, parIzq, expLog, parDer, finCodigo, llaveIzq,
                 sentencias, llaveDer
             )
         }
@@ -379,25 +398,27 @@ class AnalizadorSintactico(var listaTokens: ArrayList<Token>) {
             var palabraReservada = tokenActual
             obtenerSiguienteToken()
             if (tokenActual.categoria == Categoria.PARENTESIS_IZQUIERDO) {
-                var parIzq = tokenActual
-                obtenerSiguienteToken()
-                var exp = esExpresion()
-                if (tokenActual.categoria == Categoria.PARENTESIS_DERECHO) {
-                    var parDer = tokenActual
-                    obtenerSiguienteToken()
-                    if (tokenActual.categoria == Categoria.FIN_SENTENCIA) {
-                        var finSentencia = tokenActual
-                        obtenerSiguienteToken()
-                        return Impresion(palabraReservada, parIzq, exp, parDer, finSentencia)
-                    } else {
-                        reportarErrores("Falta el final de sentencia en la impresion")
-                    }
-                } else {
-                    reportarErrores("Falta parentesis derecho en la impresion")
-                }
             } else {
                 reportarErrores("Falta parentesis izquierdo en la impresion")
             }
+            var parIzq = tokenActual
+            obtenerSiguienteToken()
+            var exp = esExpresion()
+            if (tokenActual.categoria == Categoria.PARENTESIS_DERECHO) {
+            } else {
+                reportarErrores("Falta parentesis derecho en la impresion")
+            }
+            var parDer = tokenActual
+            obtenerSiguienteToken()
+            if (tokenActual.categoria == Categoria.FIN_SENTENCIA) {
+            } else {
+                reportarErrores("Falta el final de sentencia en la impresion")
+            }
+            var finSentencia = tokenActual
+            obtenerSiguienteToken()
+            return Impresion(palabraReservada, parIzq, exp, parDer, finSentencia)
+
+
         }
         return null
     }
@@ -411,25 +432,27 @@ class AnalizadorSintactico(var listaTokens: ArrayList<Token>) {
             var palabraReservada = tokenActual
             obtenerSiguienteToken()
             if (tokenActual.categoria == Categoria.PARENTESIS_IZQUIERDO) {
-                var parIzq = tokenActual
-                obtenerSiguienteToken()
-                var exp = esExpresion()
-                if (tokenActual.categoria == Categoria.PARENTESIS_DERECHO) {
-                    var parDer = tokenActual
-                    obtenerSiguienteToken()
-                    if (tokenActual.categoria == Categoria.FIN_SENTENCIA) {
-                        var finSentencia = tokenActual
-                        obtenerSiguienteToken()
-                        return ImpresionInversa(palabraReservada, parIzq, exp, parDer, finSentencia)
-                    } else {
-                        reportarErrores("Falta el final de sentencia en la impresion")
-                    }
-                } else {
-                    reportarErrores("Falta parentesis derecho en la impresion")
-                }
             } else {
                 reportarErrores("Falta parentesis izquierdo en la impresion")
             }
+            var parIzq = tokenActual
+            obtenerSiguienteToken()
+            var exp = esExpresion()
+            if (tokenActual.categoria == Categoria.PARENTESIS_DERECHO) {
+            } else {
+                reportarErrores("Falta parentesis derecho en la impresion")
+            }
+            var parDer = tokenActual
+            obtenerSiguienteToken()
+            if (tokenActual.categoria == Categoria.FIN_SENTENCIA) {
+            } else {
+                reportarErrores("Falta el final de sentencia en la impresion")
+            }
+            var finSentencia = tokenActual
+            obtenerSiguienteToken()
+            return ImpresionInversa(palabraReservada, parIzq, exp, parDer, finSentencia)
+
+
         }
         return null
     }
@@ -444,16 +467,21 @@ class AnalizadorSintactico(var listaTokens: ArrayList<Token>) {
             obtenerSiguienteToken()
             var expresion = esExpresion()
             if (expresion != null) {
-                if (tokenActual.categoria == Categoria.FIN_SENTENCIA) {
-                    var finSentencia = tokenActual
-                    obtenerSiguienteToken()
-                    return Retorno(palabraReservada, expresion, finSentencia)
-                } else {
-                    reportarErrores("Falta el final de sentencia en el retorno")
-                }
             } else {
                 reportarErrores("Falta la expresion en el retorno")
+                while ((tokenActual.categoria != Categoria.FIN_SENTENCIA) && tokenActual.categoria != Categoria.FIN_CODIGO) {
+
+                    obtenerSiguienteToken()
+                }
             }
+
+            if (tokenActual.categoria == Categoria.FIN_SENTENCIA) {
+            } else {
+                reportarErrores("Falta el final de sentencia en el retorno")
+            }
+            var finSentencia = tokenActual
+            obtenerSiguienteToken()
+            return Retorno(palabraReservada, expresion, finSentencia)
         }
         return null
     }
@@ -509,7 +537,7 @@ class AnalizadorSintactico(var listaTokens: ArrayList<Token>) {
     }
 
     /**
-     * <esCliclo> ::= mientras "(" <esExpresionLogica> ")" "{" [<esListaSentencias>] "}"
+     * <esCliclo> ::= mientras "(" <esExpresionLogica> ")" entonces "{" [<esListaSentencias>] "}"
      *
      */
     fun esCiclo(): Ciclo? {
@@ -517,45 +545,50 @@ class AnalizadorSintactico(var listaTokens: ArrayList<Token>) {
             var palabraReservada = tokenActual
             obtenerSiguienteToken()
             if (tokenActual.categoria == Categoria.PARENTESIS_IZQUIERDO) {
-                var parIzq = tokenActual
-                obtenerSiguienteToken()
-                var expLog = esExpresionLogica()
-                if (expLog != null) {
-                    //obtenerSiguienteToken()
-                    if (tokenActual.categoria == Categoria.PARENTESIS_DERECHO) {
-                        var parDer = tokenActual
-                        obtenerSiguienteToken()
-                        if (tokenActual.categoria == Categoria.LLAVE_IZQUIERDA) {
-                            var llaveIzq = tokenActual
-                            obtenerSiguienteToken()
-                            var sentencias = esListaSentencias()
-                            if (tokenActual.categoria == Categoria.LLAVE_DERECHA) {
-                                var llaveDer = tokenActual
-                                obtenerSiguienteToken()
-                                return Ciclo(
-                                    palabraReservada,
-                                    parIzq,
-                                    expLog,
-                                    parDer,
-                                    llaveIzq,
-                                    sentencias,
-                                    llaveDer
-                                )
-                            } else {
-                                reportarErrores("Falta llave derecha en el ciclo")
-                            }
-                        } else {
-                            reportarErrores("Falta llave izquierda en en el ciclo")
-                        }
-                    } else {
-                        reportarErrores("Falta parentesis derecho en el ciclo")
-                    }
-                } else {
-                    reportarErrores("Falta expresion logica en ciclo")
-                }
             } else {
                 reportarErrores("Falta parentesis izquierdo en el ciclo")
             }
+            var parIzq = tokenActual
+            obtenerSiguienteToken()
+            var expLo = esExpresionLogica()
+
+            if (expLo != null) {
+            } else {
+                reportarErrores("Falta expresion logica en ciclo")
+                while ((tokenActual.categoria != Categoria.PARENTESIS_DERECHO) && tokenActual.categoria != Categoria.FIN_CODIGO) {
+                    obtenerSiguienteToken()
+                }
+            }
+            if (tokenActual.categoria == Categoria.PARENTESIS_DERECHO) {
+            } else {
+                reportarErrores("Falta parentesis derecho en el ciclo")
+            }
+            var parDer = tokenActual
+            obtenerSiguienteToken()
+            if (tokenActual.categoria == Categoria.LLAVE_IZQUIERDA) {
+            } else {
+                reportarErrores("Falta llave izquierda en en el ciclo")
+            }
+            var llaveIzq = tokenActual
+            obtenerSiguienteToken()
+            var sentencias = esListaSentencias()
+            if (tokenActual.categoria == Categoria.LLAVE_DERECHA) {
+            } else {
+                reportarErrores("Falta llave derecha en el ciclo")
+            }
+            var llaveDer = tokenActual
+            obtenerSiguienteToken()
+            return Ciclo(
+                palabraReservada,
+                parIzq,
+                expLo,
+                parDer,
+                llaveIzq,
+                sentencias,
+                llaveDer
+            )
+
+
         }
         return null
     }
@@ -691,14 +724,14 @@ class AnalizadorSintactico(var listaTokens: ArrayList<Token>) {
      */
     fun esExpresionCadena(): ExpresionCadena? {
         if (tokenActual.categoria == Categoria.CADENA_CARACTERES) {
-            val cadena = tokenActual
+            var cadena = tokenActual
             obtenerSiguienteToken()
             if (tokenActual.categoria != Categoria.OPERADOR_ARITMETICO && tokenActual.lexema != "+") {
                 return ExpresionCadena(cadena)
             } else {
-                val mas = tokenActual
+                var mas = tokenActual
                 obtenerSiguienteToken()
-                val ex = esExpresion()
+                var ex = esExpresion()
                 if (ex != null) {
                     return ExpresionCadena(cadena, mas, ex)
                 } else {
@@ -716,7 +749,6 @@ class AnalizadorSintactico(var listaTokens: ArrayList<Token>) {
     fun esExpresionRelacional(): ExpresionRelacional? {
         var operador: Token? = null
         val ea: ExpresionAritmetica? = esExpresionAritmetica()
-
         if (ea != null) {
             if (tokenActual.categoria == Categoria.OPERADOR_RELACIONAL) {
                 operador = tokenActual
@@ -731,12 +763,13 @@ class AnalizadorSintactico(var listaTokens: ArrayList<Token>) {
                 reportarErrores(" Falta operador relacional ")
             }
         } else {
-            if (tokenActual.categoria == Categoria.PALABRA_RESERVADA
-                && tokenActual.lexema == " verdadero "
-                || tokenActual.categoria == Categoria.PALABRA_RESERVADA
-                && tokenActual.lexema == " falso "
+            operador = tokenActual
+            if (operador.categoria == Categoria.PALABRA_RESERVADA
+                && operador.lexema == "verdadero"
+                || operador.categoria == Categoria.PALABRA_RESERVADA
+                && operador.lexema == "falso"
             ) {
-                return ExpresionRelacional(tokenActual)
+                return ExpresionRelacional(operador)
             }
         }
         return null
@@ -787,9 +820,13 @@ class AnalizadorSintactico(var listaTokens: ArrayList<Token>) {
      * <esEspresionLogica> ::= <valorlogico>[operadorLogicoBinario <esExpresionlogica>  | operacionNegacion <esExpresionlogica> ]
      */
     fun esExpresionLogica(): ExpresionLogica? {
+
+
         val vl = esExpresionRelacional()
 
+
         if (vl != null) {
+
             if (tokenActual.categoria == Categoria.OPERADOR_LOGICO && (tokenActual.lexema == "&&" || tokenActual.lexema == "||")) {
                 val operadorLogico = tokenActual
                 obtenerSiguienteToken()
