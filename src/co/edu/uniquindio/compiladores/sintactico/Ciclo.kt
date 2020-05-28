@@ -28,13 +28,6 @@ class Ciclo(var palabraReservada:Token,  var parIzq:Token,  var expresionLogica:
         raiz.children.add(expresionLogica.getArbolVisual())
         return raiz
     }
-    fun obtenerIdentificador(): ArrayList<String> {
-        var lista = ArrayList<String>()
-
-        lista.add(""+(palabraReservada!!.fila))
-        lista.add(""+(palabraReservada!!.columna))
-        return lista
-    }
 
     /**
      *
@@ -44,10 +37,9 @@ class Ciclo(var palabraReservada:Token,  var parIzq:Token,  var expresionLogica:
         listaErrores: ArrayList<ErrorSemantico>,
         ambito: Simbolo
     ) {
-        var ambitoCiclo: Simbolo = Simbolo(palabraReservada!!.lexema,null,obtenerIdentificador(),palabraReservada!!.fila,palabraReservada!!.columna)
 
         for (s in lstSentencias){
-            s.llenarTablaSimbolos(tablaSimbolos, listaErrores,ambitoCiclo)
+            s.llenarTablaSimbolos(tablaSimbolos, listaErrores,ambito)
         }
     }
 

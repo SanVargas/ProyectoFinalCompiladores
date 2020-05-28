@@ -61,9 +61,11 @@ class TablaSimbolos(var listaErrores: ArrayList<ErrorSemantico>) {
      * el valor que buscamos
      */
     fun buscarSimboloValor(nombre: String, ambito: Simbolo): Simbolo? {
+
         for (simbolo in listaSimbolos) {
             if (simbolo.ambito != null) {
                 if (nombre == simbolo.nombre && ambito.nombre!! == simbolo.ambito!!.nombre) {
+
                     if (ambito.tipoParametros!!.size == simbolo.ambito!!.tipoParametros!!.size) {
                         var p = 0
                         while (p < ambito.tipoParametros!!.size && ambito.tipoParametros!![p] == simbolo.ambito!!.tipoParametros!![p]) {

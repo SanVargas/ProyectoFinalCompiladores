@@ -48,14 +48,14 @@ class Condicion(
         listaErrores: ArrayList<ErrorSemantico>,
         ambito: Simbolo
     ) {
-
-        var ambitoCondicion: Simbolo = Simbolo(palabraReservada!!.lexema,null,obtenerIdentificador(),palabraReservada!!.fila,palabraReservada!!.columna)
-
         for (s in sentencias) {
-            s.llenarTablaSimbolos(tablaSimbolos, listaErrores, ambitoCondicion)
+            s.llenarTablaSimbolos(tablaSimbolos, listaErrores, ambito)
         }
-
-        //hay que programar el else de la condicion
+        if (sentencias != null) {
+            for (s in sentencias) {
+                s.llenarTablaSimbolos(tablaSimbolos, listaErrores, ambito)
+            }
+        }
     }
 
 
@@ -66,26 +66,14 @@ class Condicion(
     ) {
 
         expresionLogica!!.analizarSemantica(tablaSimbolos, erroresSemanticos, ambito)
-        var ambitoCondicion: Simbolo = Simbolo(palabraReservada!!.lexema,null,obtenerIdentificador(),palabraReservada!!.fila,palabraReservada!!.columna)
-
         for (s in sentencias) {
-            s.analizarSemantica(tablaSimbolos, erroresSemanticos, ambitoCondicion)
+            s.analizarSemantica(tablaSimbolos, erroresSemanticos, ambito)
         }
 
         if (sentencias != null) {
             for (s in sentencias) {
-                s.analizarSemantica(tablaSimbolos, erroresSemanticos, ambitoCondicion)
+                s.analizarSemantica(tablaSimbolos, erroresSemanticos, ambito)
             }
         }
     }
-
-
-    fun obtenerIdentificador(): ArrayList<String> {
-        var lista = ArrayList<String>()
-
-        lista.add(""+(palabraReservada!!.fila))
-        lista.add(""+(palabraReservada!!.columna))
-        return lista
-    }
-
 }

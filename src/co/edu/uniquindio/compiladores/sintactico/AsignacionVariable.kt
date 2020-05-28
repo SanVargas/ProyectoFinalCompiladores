@@ -37,13 +37,13 @@ class AsignacionVariable(
     constructor(
         identificador: Token?,
         opAsignacion: Token?,
-        invocacion: InvocacionFuncion?
-
+        invocacion: InvocacionFuncion?,
+        finSentencia: Token?
     ) : this() {
         this.identificador = identificador
         this.opAsignacion = opAsignacion
         this.invocacion = invocacion
-
+        this.finSentencia = finSentencia
 
 
     }
@@ -97,9 +97,10 @@ class AsignacionVariable(
                         )
                     )
                 }
-            } else if(invocacion !=null){
+            }else if(invocacion !=null){
                var funcion=tablaSimbolos.buscarSimboloFuncion(invocacion!!.id.lexema,obtenerTipoDeParametros(tablaSimbolos, ambito))
                 if(tipo != funcion!!.tipo){
+
                     erroresSemanticos.add(
                         ErrorSemantico(
                             "El tipo de dato de la funcion ${funcion.nombre} (${funcion.tipo}) no coincide con el tipo de dato de la variable ${identificador!!.lexema} que es  $tipo",
@@ -108,8 +109,8 @@ class AsignacionVariable(
                         )
                     )
                 }
-            }
 
+            }
         }
     }
 
