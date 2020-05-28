@@ -55,7 +55,11 @@ class Funcion(
         return lista
     }
 
-    fun llenarTablaSimbolos(tablaSimbolos: TablaSimbolos, erroresSemanticos: ArrayList<ErrorSemantico>, ambito: Simbolo) {
+    fun llenarTablaSimbolos(
+        tablaSimbolos: TablaSimbolos,
+        erroresSemanticos: ArrayList<ErrorSemantico>,
+        ambito: Simbolo
+    ) {
         if (tipoRetorno != null) {
             tablaSimbolos.guardarSimboloFuncion(
                 identificador.lexema,
@@ -78,7 +82,13 @@ class Funcion(
 
         for (parametro in lstParametros) {
 
-            var ambitoFuncion : Simbolo = Simbolo(identificador.lexema,tipoRetorno.lexema,obtenerTipoDeParametros(),identificador.fila,identificador.columna)
+            var ambitoFuncion: Simbolo = Simbolo(
+                identificador.lexema,
+                tipoRetorno.lexema,
+                obtenerTipoDeParametros(),
+                identificador.fila,
+                identificador.columna
+            )
             tablaSimbolos.guardarSimboloValor(
                 parametro.nombre.lexema,
                 parametro.tipoDato.lexema,
@@ -89,8 +99,13 @@ class Funcion(
         }
 
         for (s in lstSentencias) {
-            var ambitoFuncion : Simbolo = Simbolo(identificador.lexema,tipoRetorno.lexema,obtenerTipoDeParametros(),identificador.fila,identificador.columna)
-
+            var ambitoFuncion: Simbolo = Simbolo(
+                identificador.lexema,
+                tipoRetorno.lexema,
+                obtenerTipoDeParametros(),
+                identificador.fila,
+                identificador.columna
+            )
             s.llenarTablaSimbolos(tablaSimbolos, erroresSemanticos, ambitoFuncion)
         }
     }
@@ -98,29 +113,26 @@ class Funcion(
 
     fun analizarSemantica(tablaSimbolos: TablaSimbolos, erroresSemanticos: ArrayList<ErrorSemantico>) {
         for (s in lstSentencias) {
-            var ambitoFuncion : Simbolo = Simbolo(identificador.lexema,tipoRetorno.lexema,obtenerTipoDeParametros(),identificador.fila,identificador.columna)
+            var ambitoFuncion: Simbolo = Simbolo(
+                identificador.lexema,
+                tipoRetorno.lexema,
+                obtenerTipoDeParametros(),
+                identificador.fila,
+                identificador.columna
+            )
             s.analizarSemantica(tablaSimbolos, erroresSemanticos, ambitoFuncion)
         }
 
     }
 
     fun getJavaCode(): String {
-        var codigo: String = ""
-        if (identificador.lexema == "main") {
-            codigo = "public static void main(String[] args){"
-        } else {
-            codigo = "static " + tipoRetorno.getJavaCode() + " " + identificador.lexema
-            if(lstParametros.size == 0) {
-                codigo+="( ){"
-            }else {
-                codigo += "("
-                for (p in lstParametros) {
-                    codigo += p.getJavaCode() + ","
-                }
-                codigo = codigo.substring(0, codigo.length - 1)
-                codigo += "){"
-            }
+        var codigo: String = tipoRetorno.getJavaCode() + " " + identificador.lexema + "("
+
+        for (p in lstParametros) {
+            codigo += p.getJavaCode() + ","
         }
+        codigo = codigo.substring(0, codigo.length - 1)
+        codigo += "){"
         for (s in lstSentencias) {
             codigo += s.getJavaCode()
         }

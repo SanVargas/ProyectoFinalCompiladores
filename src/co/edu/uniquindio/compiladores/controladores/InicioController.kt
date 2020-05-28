@@ -1,4 +1,5 @@
 package co.edu.uniquindio.compiladores.controladores
+
 import co.edu.uniquindio.compiladores.sintactico.AnalizadorSintactico
 import co.edu.uniquindio.compiladores.lexico.AnalizadorLexico
 import co.edu.uniquindio.compiladores.lexico.ErrorLexico
@@ -18,40 +19,60 @@ import java.net.URL
 import java.util.*
 import kotlin.collections.ArrayList
 
-class InicioController : Initializable{
-    lateinit var lexico:AnalizadorLexico
-    lateinit var sintactico:AnalizadorSintactico
-    lateinit var semantico:AnalizadorSemantico
-    var uC:UnidadDeCompilacion?=null
+class InicioController : Initializable {
+    lateinit var lexico: AnalizadorLexico
+    lateinit var sintactico: AnalizadorSintactico
+    lateinit var semantico: AnalizadorSemantico
+    lateinit var uC: UnidadDeCompilacion
 
-    @FXML lateinit var txtCodigo:TextArea
-    @FXML lateinit var txtJavaCodigo:TextArea
+    @FXML
+    lateinit var txtCodigo: TextArea
+    @FXML
+    lateinit var txtJavaCodigo: TextArea
 
-    @FXML lateinit var tablaPrincipal: TableView<Token>
-    @FXML lateinit var colFila: TableColumn<Token, String>
-    @FXML lateinit var colColumna: TableColumn<Token, String>
-    @FXML lateinit var colCategoria: TableColumn<Token, String>
-    @FXML lateinit var colLexema: TableColumn<Token, String>
+    @FXML
+    lateinit var tablaPrincipal: TableView<Token>
+    @FXML
+    lateinit var colFila: TableColumn<Token, String>
+    @FXML
+    lateinit var colColumna: TableColumn<Token, String>
+    @FXML
+    lateinit var colCategoria: TableColumn<Token, String>
+    @FXML
+    lateinit var colLexema: TableColumn<Token, String>
 
-    @FXML lateinit var tablaError: TableView<ErrorLexico>
-    @FXML lateinit var colError: TableColumn<ErrorLexico, String>
-    @FXML lateinit var colFilaError: TableColumn<ErrorLexico, String>
-    @FXML lateinit var colColumnaError: TableColumn<ErrorLexico, String>
+    @FXML
+    lateinit var tablaError: TableView<ErrorLexico>
+    @FXML
+    lateinit var colError: TableColumn<ErrorLexico, String>
+    @FXML
+    lateinit var colFilaError: TableColumn<ErrorLexico, String>
+    @FXML
+    lateinit var colColumnaError: TableColumn<ErrorLexico, String>
 
-    @FXML lateinit var tablaErrorSintactico: TableView<ErrorSintactico>
-    @FXML lateinit var colErrSintactico: TableColumn<ErrorSintactico, String>
-    @FXML lateinit var colFilaSintactico: TableColumn<ErrorSintactico, String>
-    @FXML lateinit var colColSintactico: TableColumn<ErrorSintactico, String>
+    @FXML
+    lateinit var tablaErrorSintactico: TableView<ErrorSintactico>
+    @FXML
+    lateinit var colErrSintactico: TableColumn<ErrorSintactico, String>
+    @FXML
+    lateinit var colFilaSintactico: TableColumn<ErrorSintactico, String>
+    @FXML
+    lateinit var colColSintactico: TableColumn<ErrorSintactico, String>
 
-    @FXML lateinit var tablaErrorSemantico: TableView<ErrorSemantico>
-    @FXML lateinit var colErrSemantico: TableColumn<ErrorSemantico, String>
-    @FXML lateinit var colFilaSemantico: TableColumn<ErrorSemantico, String>
-    @FXML lateinit var colColSemantico: TableColumn<ErrorSemantico, String>
+    @FXML
+    lateinit var tablaErrorSemantico: TableView<ErrorSemantico>
+    @FXML
+    lateinit var colErrSemantico: TableColumn<ErrorSemantico, String>
+    @FXML
+    lateinit var colFilaSemantico: TableColumn<ErrorSemantico, String>
+    @FXML
+    lateinit var colColSemantico: TableColumn<ErrorSemantico, String>
 
-    @FXML lateinit var arbolVisual: TreeView<String>
+    @FXML
+    lateinit var arbolVisual: TreeView<String>
 
 
-    override fun initialize(location: URL?, resources: ResourceBundle?){
+    override fun initialize(location: URL?, resources: ResourceBundle?) {
         colFila.cellValueFactory = PropertyValueFactory("fila")
         colColumna.cellValueFactory = PropertyValueFactory("columna")
         colCategoria.cellValueFactory = PropertyValueFactory("categoria")
@@ -72,35 +93,34 @@ class InicioController : Initializable{
 
     @FXML
     fun analizar(e: ActionEvent) {
-        if(txtCodigo.text.length>0){
+        if (txtCodigo.text.length > 0) {
             lexico = AnalizadorLexico(txtCodigo.text)
             lexico.analizar()
             tablaPrincipal.items = FXCollections.observableArrayList(lexico.listaTokens)
             tablaError.items = FXCollections.observableArrayList(lexico.listaErrores)
-            if(lexico.listaErrores.isEmpty()){
+            if (lexico.listaErrores.isEmpty()) {
                 sintactico = AnalizadorSintactico(lexico.listaTokens)
-                uC = sintactico.esUnidadDeCompilacion()
+                uC = sintactico.esUnidadDeCompilacion()!!
                 tablaErrorSintactico.items = FXCollections.observableArrayList(sintactico.listaErrores)
-                print(sintactico.listaErrores)
-                if(uC!=null){
-                    arbolVisual.root = uC?.getArbolVisual()
+                if (uC != null) {
+                    arbolVisual.root = uC.getArbolVisual()
                     semantico = AnalizadorSemantico(uC)
                     semantico.llenarTablaSimbolos()
                     semantico.analizarSemantica()
                     tablaErrorSemantico.items = FXCollections.observableArrayList(semantico.erroresSemanticos)
-                }else{
+                } else {
                     var alerta = Alert(Alert.AlertType.WARNING)
                     alerta.headerText = "CUIDADO"
-                    alerta.contentText="Hay errores lexicos en el codigo fuente"
+                    alerta.contentText = "Hay errores lexicos en el codigo fuente"
                 }
             }
         }
     }
+
     @FXML
-    fun traducirCodigo(e:ActionEvent){
-        if(uC != null){
-            var codigo:String = uC?.getJavaCode()!!
-            println(codigo)
+    fun traducirCodigo(e: ActionEvent) {
+        if (uC != null) {
+            var codigo: String = uC.getJavaCode()
             txtJavaCodigo.appendText(codigo)
         }
     }
