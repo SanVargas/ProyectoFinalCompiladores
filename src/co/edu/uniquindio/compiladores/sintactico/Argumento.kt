@@ -22,19 +22,14 @@ class Argumento(var exp: Expresion?) {
         return raiz
     }
 
-    open fun obtenerTipo(tablaSimbolos: TablaSimbolos, ambito: Simbolo): String {
-        return exp!!.obtenerTipo(tablaSimbolos, ambito)
+    open fun obtenerTipo(tablaSimbolos: TablaSimbolos, ambito:Simbolo): String {
+      return  exp!!.obtenerTipo(tablaSimbolos,ambito)
     }
+ open fun analizarSemantica(tablaSimbolos: TablaSimbolos, erroresSemanticos: ArrayList<ErrorSemantico>, ambito: Simbolo){
+     return exp!!.analizarSemantica(tablaSimbolos, erroresSemanticos, ambito)
 
-    open fun analizarSemantica(
-        tablaSimbolos: TablaSimbolos,
-        erroresSemanticos: ArrayList<ErrorSemantico>,
-        ambito: Simbolo
-    ) {
-        return exp!!.analizarSemantica(tablaSimbolos, erroresSemanticos, ambito)
-
+ }
+    fun getJavaCode(): String{
+        return ""+exp?.getJavaCode()
     }
-    //fun getJavaCode(): String {
-    //  return "" + exp.getJavaCode()
-    //}
 }
