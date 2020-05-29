@@ -136,7 +136,7 @@ class InicioController : Initializable {
             var codigo: String = uC.getJavaCode()
 
             File("src/Principal.java").writeText(codigo)
-            var runTime = Runtime.getRuntime().exec("java src/Principal.java")
+            var runTime = Runtime.getRuntime().exec("javac src/Principal.java")
             runTime.waitFor()
             Runtime.getRuntime().exec("java Principal", null, File("src"))
 
