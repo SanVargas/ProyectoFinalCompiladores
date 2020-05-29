@@ -19,13 +19,14 @@ class Condicion(
     var finCodigo: Token?,
     var llaIzq: Token?,
     var sentencias: ArrayList<Sentencia>,
-    var llaDer: Token?
+    var llaDer: Token?,
+    var ademas: Token?,
+    var llaIzqAdemas: Token?,
+    var sentenciasAdemas: ArrayList<Sentencia>,
+    var llaDerAdemas: Token?
 ) : Sentencia() {
 
-    override fun toString(): String {
-        return "Condicion(palabraReservada=$palabraReservada,parIzq=$parIzq,expresionLogica=$expresionLogica, parDer=$parDer,finCodigo=$finCodigo, llaIzq=$llaIzq" +
-                " sentencias=$sentencias, llaDer=$llaDer)"
-    }
+
 
     override fun getArbolVisual(): TreeItem<String> {
         var raiz = TreeItem("Condicion")
@@ -61,9 +62,9 @@ class Condicion(
         for (s in sentencias) {
             s.llenarTablaSimbolos(tablaSimbolos, listaErrores, ambitoCondicion)
         }
-
-
-        //hay que programar el else de la condicion
+        for (s in sentenciasAdemas) {
+            s.llenarTablaSimbolos(tablaSimbolos, listaErrores, ambitoCondicion)
+        }
     }
 
 
@@ -102,6 +103,16 @@ class Condicion(
                 s.analizarSemantica(tablaSimbolos, erroresSemanticos, ambitoCondicion)
             }
         }
+
+        for (s in sentenciasAdemas) {
+            s.analizarSemantica(tablaSimbolos, erroresSemanticos, ambitoCondicion)
+        }
+        if (sentenciasAdemas != null) {
+            for (s in sentenciasAdemas) {
+                s.analizarSemantica(tablaSimbolos, erroresSemanticos, ambitoCondicion)
+            }
+        }
+
     }
 
     fun obtenerIdentificador(): ArrayList<String> {
@@ -121,6 +132,9 @@ class Condicion(
         return codigo
     }
 
+    override fun toString(): String {
+        return "Condicion(palabraReservada=$palabraReservada, parIzq=$parIzq, expresionLogica=$expresionLogica, parDer=$parDer, finCodigo=$finCodigo, llaIzq=$llaIzq, sentencias=$sentencias, llaDer=$llaDer, ademas=$ademas, llaIzqAdemas=$llaIzqAdemas, sentenciasAdemas=$sentenciasAdemas, llaDerAdemas=$llaDerAdemas)"
+    }
 
 
 }

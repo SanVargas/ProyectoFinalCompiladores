@@ -250,7 +250,7 @@ class AnalizadorSintactico(var listaTokens: ArrayList<Token>) {
     }
 
     /**
-     * <esCondicion>::= si "(" <esExpresionLogica> ")" entonces "{" [<esListaSentencias>] "}"
+     * <esCondicion>::= si "(" <esExpresionLogica> ")" entonces "{" [<esListaSentencias>] "}" ademas "{" [<esListaSentencias>] "}"
      *
      */
     fun esCondicion(): Condicion? {
@@ -311,9 +311,28 @@ class AnalizadorSintactico(var listaTokens: ArrayList<Token>) {
             }
             var llaveDer = tokenActual
             obtenerSiguienteToken()
+            if (tokenActual.categoria == Categoria.PALABRA_RESERVADA && tokenActual.lexema == "ademas") {
+            } else {
+                reportarErrores("Falta ademas del si")
+            }
+            var ademas= tokenActual
+            obtenerSiguienteToken()
+            if (tokenActual.categoria == Categoria.LLAVE_IZQUIERDA) {
+            } else {
+                reportarErrores("Falta llave izquierda en la condicion")
+            }
+            var llaveIzqAdemas = tokenActual
+            obtenerSiguienteToken()
+            var sentenciasAdemas = esListaSentencias()
+            if (tokenActual.categoria == Categoria.LLAVE_DERECHA) {
+            } else {
+                reportarErrores("Falta llave derecha en la condicion")
+            }
+            var llaveDerAdemas = tokenActual
+            obtenerSiguienteToken()
             return Condicion(
                 palabraReservada, parIzq, expLog, parDer, finCodigo, llaveIzq,
-                sentencias, llaveDer
+                sentencias, llaveDer,ademas,llaveIzqAdemas,sentenciasAdemas,llaveDerAdemas
             )
         }
         return null
@@ -551,11 +570,19 @@ class AnalizadorSintactico(var listaTokens: ArrayList<Token>) {
             var parIzq = tokenActual
             obtenerSiguienteToken()
             var expLo = esExpresionLogica()
+            var iden=0
+            var parDer:Token?=null
 
             if (expLo != null) {
             } else {
                 reportarErrores("Falta expresion logica en ciclo")
-                while ((tokenActual.categoria != Categoria.PARENTESIS_DERECHO) && tokenActual.categoria != Categoria.FIN_CODIGO) {
+                while (!(tokenActual.categoria == Categoria.PALABRA_RESERVADA && tokenActual.lexema == "entonces") && tokenActual.categoria != Categoria.FIN_CODIGO) {
+                    iden=0
+                    if(tokenActual.categoria == Categoria.PARENTESIS_DERECHO){
+                        iden=1
+                        parDer=tokenActual
+
+                    }
                     obtenerSiguienteToken()
                 }
             }
@@ -563,7 +590,15 @@ class AnalizadorSintactico(var listaTokens: ArrayList<Token>) {
             } else {
                 reportarErrores("Falta parentesis derecho en el ciclo")
             }
-            var parDer = tokenActual
+            parDer = tokenActual
+            if(!(tokenActual.categoria == Categoria.PALABRA_RESERVADA && tokenActual.lexema == "entonces")){
+                obtenerSiguienteToken()
+            }
+
+            if (tokenActual.categoria == Categoria.PALABRA_RESERVADA && tokenActual.lexema == "entonces") {
+            } else {
+                reportarErrores("Falta fin de codigo")
+            }
             obtenerSiguienteToken()
             if (tokenActual.categoria == Categoria.LLAVE_IZQUIERDA) {
             } else {
