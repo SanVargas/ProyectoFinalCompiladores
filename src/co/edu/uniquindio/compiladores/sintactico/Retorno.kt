@@ -41,10 +41,10 @@ class Retorno(var palabraReservada: Token, var expresion: Expresion?, var finSen
         erroresSemanticos: ArrayList<ErrorSemantico>,
         ambito: Simbolo
     ) {
-        var tipoExpresion =null
+        var tipoExpresion:String? =null
         if(expresion != null) {
             expresion!!.analizarSemantica(tablaSimbolos, erroresSemanticos, ambito)
-            var tipoExpresion = expresion!!.obtenerTipo(tablaSimbolos, ambito)
+            tipoExpresion= expresion!!.obtenerTipo(tablaSimbolos, ambito)
         }else{
             erroresSemanticos.add(ErrorSemantico("La expresion del retorno de ambito ${ambito.nombre} tiene un error",palabraReservada.fila,palabraReservada.columna))
 

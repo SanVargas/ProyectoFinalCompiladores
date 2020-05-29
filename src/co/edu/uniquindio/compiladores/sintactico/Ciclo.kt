@@ -72,7 +72,7 @@ class Ciclo(var palabraReservada:Token,  var parIzq:Token,  var expresionLogica:
     override fun getJavaCode(): String {
         var codigo: String = "while (" + expresionLogica!!.getJavaCode() + "){"
         for (s in lstSentencias) {
-            codigo = s.getJavaCode()
+            codigo += s.getJavaCode()
         }
          codigo += "}"
         return codigo
