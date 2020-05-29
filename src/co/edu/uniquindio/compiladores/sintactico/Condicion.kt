@@ -20,12 +20,9 @@ class Condicion(
     var llaIzq: Token?,
     var sentencias: ArrayList<Sentencia>,
     var llaDer: Token?,
-    var ademas: Token?,
-    var llaIzqAdemas: Token?,
-    var sentenciasAdemas: ArrayList<Sentencia>,
-    var llaDerAdemas: Token?
-) : Sentencia() {
+    var ademas: CondicionAdemas?
 
+) : Sentencia() {
 
 
     override fun getArbolVisual(): TreeItem<String> {
@@ -51,6 +48,9 @@ class Condicion(
         ambito: Simbolo
     ) {
 
+
+        ademas!!.llenarTablaSimbolos(tablaSimbolos, listaErrores, ambito)
+
         var ambitoCondicion: Simbolo = Simbolo(
             palabraReservada!!.lexema,
             null,
@@ -59,12 +59,12 @@ class Condicion(
             palabraReservada!!.columna
         )
 
+
         for (s in sentencias) {
             s.llenarTablaSimbolos(tablaSimbolos, listaErrores, ambitoCondicion)
         }
-        for (s in sentenciasAdemas) {
-            s.llenarTablaSimbolos(tablaSimbolos, listaErrores, ambitoCondicion)
-        }
+
+
     }
 
 
@@ -73,6 +73,8 @@ class Condicion(
         erroresSemanticos: ArrayList<ErrorSemantico>,
         ambito: Simbolo
     ) {
+        ademas!!.analizarSemantica(tablaSimbolos, erroresSemanticos, ambito)
+
         if (expresionLogica != null) {
             expresionLogica!!.analizarSemantica(tablaSimbolos, erroresSemanticos, ambito)
         } else {
@@ -104,14 +106,6 @@ class Condicion(
             }
         }
 
-        for (s in sentenciasAdemas) {
-            s.analizarSemantica(tablaSimbolos, erroresSemanticos, ambitoCondicion)
-        }
-        if (sentenciasAdemas != null) {
-            for (s in sentenciasAdemas) {
-                s.analizarSemantica(tablaSimbolos, erroresSemanticos, ambitoCondicion)
-            }
-        }
 
     }
 
@@ -124,20 +118,16 @@ class Condicion(
     }
 
     override fun getJavaCode(): String {
-        var codigo:String = "if ("+expresionLogica?.getJavaCode()+"){"
-        for(s in sentencias){
-            codigo+= s.getJavaCode()
-        }
-        codigo+="}else{"
-        for(s in sentenciasAdemas){
-            codigo+=s.getJavaCode()
+        var codigo: String = "if (" + expresionLogica?.getJavaCode() + "){"
+        for (s in sentencias) {
+            codigo += s.getJavaCode()
         }
         codigo+="}"
         return codigo
     }
 
     override fun toString(): String {
-        return "Condicion(palabraReservada=$palabraReservada, parIzq=$parIzq, expresionLogica=$expresionLogica, parDer=$parDer, finCodigo=$finCodigo, llaIzq=$llaIzq, sentencias=$sentencias, llaDer=$llaDer, ademas=$ademas, llaIzqAdemas=$llaIzqAdemas, sentenciasAdemas=$sentenciasAdemas, llaDerAdemas=$llaDerAdemas)"
+        return "Condicion(palabraReservada=$palabraReservada, parIzq=$parIzq, expresionLogica=$expresionLogica, parDer=$parDer, finCodigo=$finCodigo, llaIzq=$llaIzq, sentencias=$sentencias, llaDer=$llaDer)"
     }
 
 
