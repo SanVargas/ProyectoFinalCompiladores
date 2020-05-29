@@ -122,6 +122,11 @@ class Condicion(
         for (s in sentencias) {
             codigo += s.getJavaCode()
         }
+        codigo+="}else{"
+        if(ademas!!.sentenciasAdemas.isNotEmpty())
+        for(cA in ademas!!.sentenciasAdemas) {
+            codigo += cA.getJavaCode()
+        }
         codigo+="}"
         return codigo
     }

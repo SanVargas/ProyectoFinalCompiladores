@@ -33,7 +33,7 @@ class Leer(var palabraReservada: Token, var id: Token, var finSentencia: Token) 
         if (s == null) {
             erroresSemanticos.add(
                 ErrorSemantico(
-                    "El campo ${id.lexema} no exite dentro del ambito ${ambito}",
+                    "El campo ${id.lexema} no existe dentro del ambito ${ambito}",
                     id.fila,
                     id.columna
                 )
@@ -42,7 +42,7 @@ class Leer(var palabraReservada: Token, var id: Token, var finSentencia: Token) 
     }
 
     override fun getJavaCode(): String {
-        return "JOptionPane.showImputDialog(null,”"+id.lexema+");"
+        return "JOptionPane.showInputDialog(null,"+id.lexema+");"
     }
 
 

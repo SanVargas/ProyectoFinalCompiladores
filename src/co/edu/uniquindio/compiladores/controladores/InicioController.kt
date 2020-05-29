@@ -112,13 +112,13 @@ class InicioController : Initializable {
                 } else {
                     var alerta = Alert(Alert.AlertType.WARNING)
                     alerta.headerText = "CUIDADO"
-                    alerta.contentText = "Hay errores en el codigo fuente"
+                    alerta.contentText = "Hay errores sintacticos en el codigo fuente"
                     alerta.show()
                 }
             }else {
                 var alerta = Alert(Alert.AlertType.WARNING)
                 alerta.headerText = "CUIDADO"
-                alerta.contentText = "Hay errores en el codigo fuente"
+                alerta.contentText = "Hay errores lexicos en el codigo fuente"
                 alerta.show()
             }
         }else {
@@ -134,22 +134,17 @@ class InicioController : Initializable {
         if (lexico.listaErrores.isEmpty() && sintactico.listaErrores.isEmpty() && semantico.erroresSemanticos.isEmpty()) {
             var borrar = 1
             var codigo: String = uC.getJavaCode()
-           /** File("src/Principal.java").writeText(codigo)
+
+            File("src/Principal.java").writeText(codigo)
             var runTime = Runtime.getRuntime().exec("java src/Principal.java")
             runTime.waitFor()
-            Runtime.getRuntime().exec("java Principal", null, File("src"))*/
+            Runtime.getRuntime().exec("java Principal", null, File("src"))
 
             txtJavaCodigo.appendText(codigo)
-          //  if(borrar==1){
-            //    txtJavaCodigo.clear()
-              //  var codigo: String = uC.getJavaCode()
-              //  File("src/Principal.java").writeText(codigo)
-              //  txtJavaCodigo.appendText(codigo)
-          //  }
         }else{
             var alerta = Alert(Alert.AlertType.WARNING)
             alerta.headerText = "Error"
-            alerta.contentText = "Verifique los errores"
+            alerta.contentText = "Verifique los errores del codigo fuente"
             alerta.show()
         }
     }

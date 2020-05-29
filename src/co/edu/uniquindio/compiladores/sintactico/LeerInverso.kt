@@ -40,5 +40,10 @@ class LeerInverso(var palabraReservada:Token, var id:Token, var finSentencia:Tok
         }
 
     }
+    override fun getJavaCode(): String {
+        return "JOptionPane.showInputDialog(null,"+id.lexema+");"
+    }
+
+
 
 }

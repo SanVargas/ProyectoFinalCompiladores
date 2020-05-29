@@ -33,8 +33,8 @@ class ImpresionInversa(var palabraReservada: Token, var parIzq:Token, var exp:Ex
     override fun getJavaCode(): String {
         var codigo=""
         var variable = exp?.getJavaCode()?.replace(";", "")
-        codigo+=" String ivertida =\"\";\n for (int i ="+ variable+".length()-1; i>=0; i--){\n" +
-        "       invertida +="+variable+".charAt(i);\n}"
+        codigo+=" String invertida =\"\";\n for (int i ="+ variable+".length()-1; i>=0; i--){\n" +
+        "       invertida += "+variable+".charAt(i);\n}\nSystem.out.println(invertida);"
         return codigo
     }
 }

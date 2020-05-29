@@ -68,4 +68,13 @@ class CondicionAdemas(
         lista.add("" + (ademas!!.columna))
         return lista
     }
+
+    override fun getJavaCode(): String {
+        var codigo=""
+       /** for(s in sentenciasAdemas) {
+            codigo+=s.getJavaCode()
+            return codigo
+        }*/
+        return codigo
+    }
 }
