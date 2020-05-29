@@ -76,8 +76,5 @@ class Arreglo(var tipo: Token, var identificador: Token, var lstArgumentos: Arra
         codigo = codigo.substring(0, codigo.length - 1)
         codigo += "};"
         return codigo
-// [] tipoDato identificador {1,2,3}°
-        //tipo identificador[] = {1,2,3]
-
     }
 }

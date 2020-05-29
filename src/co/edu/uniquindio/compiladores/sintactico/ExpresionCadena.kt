@@ -45,16 +45,16 @@ class ExpresionCadena(): Expresion() {
     }
 
     override fun getJavaCode(): String {
-        var codigo=""
-        codigo += cadena?.lexema
-        //codigo.replace("«", "\"")
-        //codigo.replace("»", "\"")
+        //codigo += cadena?.lexema
+        var codigo = cadena?.lexema?.replace("«", "\"")
+        codigo = codigo?.substring(0, codigo.length - 1)
+
         if(expresion!=null){
-            //cadena?.lexema?.replace("«", "\"")
-            //cadena?.lexema?.replace("»", "\"")
-            return cadena?.getJavaCode()+"+"+expresion?.getJavaCode()
+            var codigo2 = expresion?.getJavaCode()?.replace("»", "\"")
+            codigo2 = codigo2?.substring(0, codigo2.length - 1)
+            return codigo+"\"+"+codigo2+"\""
         }
-        return codigo
+        return ""+codigo+"\""
 
     }
 }

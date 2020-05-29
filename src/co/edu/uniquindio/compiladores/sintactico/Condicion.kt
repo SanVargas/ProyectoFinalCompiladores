@@ -128,7 +128,11 @@ class Condicion(
         for(s in sentencias){
             codigo+= s.getJavaCode()
         }
-        codigo+="}else{}"
+        codigo+="}else{"
+        for(s in sentenciasAdemas){
+            codigo+=s.getJavaCode()
+        }
+        codigo+="}"
         return codigo
     }
 

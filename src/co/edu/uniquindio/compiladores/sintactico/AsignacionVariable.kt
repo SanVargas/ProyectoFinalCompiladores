@@ -106,8 +106,7 @@ class AsignacionVariable() : Sentencia() {
     override fun getJavaCode(): String {
         var codigo =""
         codigo += identificador?.lexema
-        //cadena?.lexema?.replace("«", "\"")
-        //cadena?.lexema?.replace("»", "\"")
+
         if(termino!=null){
             codigo +=opAsignacion?.lexema+termino?.getJavaCode()+";"
             return codigo

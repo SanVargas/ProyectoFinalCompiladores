@@ -447,7 +447,7 @@ class AnalizadorSintactico(var listaTokens: ArrayList<Token>) {
      *
      */
     fun esImpresionInversa(): ImpresionInversa? {
-        if (tokenActual.categoria == Categoria.PALABRA_RESERVADA && tokenActual.lexema == "impInversa") {
+        if (tokenActual.categoria == Categoria.PALABRA_RESERVADA && tokenActual.lexema == "imprimirInverso") {
             var palabraReservada = tokenActual
             obtenerSiguienteToken()
             if (tokenActual.categoria == Categoria.PARENTESIS_IZQUIERDO) {

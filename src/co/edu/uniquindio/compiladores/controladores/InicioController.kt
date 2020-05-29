@@ -134,10 +134,10 @@ class InicioController : Initializable {
         if (lexico.listaErrores.isEmpty() && sintactico.listaErrores.isEmpty() && semantico.erroresSemanticos.isEmpty()) {
             var borrar = 1
             var codigo: String = uC.getJavaCode()
-            File("src/Principal.java").writeText(codigo)
+           /** File("src/Principal.java").writeText(codigo)
             var runTime = Runtime.getRuntime().exec("java src/Principal.java")
             runTime.waitFor()
-            Runtime.getRuntime().exec("java Principal", null, File("src"))
+            Runtime.getRuntime().exec("java Principal", null, File("src"))*/
 
             txtJavaCodigo.appendText(codigo)
           //  if(borrar==1){
@@ -147,8 +147,9 @@ class InicioController : Initializable {
               //  txtJavaCodigo.appendText(codigo)
           //  }
         }else{
-            var alerta = Alert(Alert.AlertType.ERROR)
-            alerta.headerText = null
+            var alerta = Alert(Alert.AlertType.WARNING)
+            alerta.headerText = "Error"
+            alerta.contentText = "Verifique los errores"
             alerta.show()
         }
     }

@@ -39,7 +39,10 @@ class Leer(var palabraReservada: Token, var id: Token, var finSentencia: Token) 
                 )
             )
         }
+    }
 
+    override fun getJavaCode(): String {
+        return "JOptionPane.showImputDialog(null,”"+id.lexema+");"
     }
 
 

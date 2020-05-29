@@ -34,7 +34,7 @@ class ImpresionInversa(var palabraReservada: Token, var parIzq:Token, var exp:Ex
         var codigo=""
         var variable = exp?.getJavaCode()?.replace(";", "")
         codigo+=" String ivertida =\"\";\n for (int i ="+ variable+".length()-1; i>=0; i--){\n" +
-        "       palabrainvertida +="+variable+".charAt(i);\n}"
+        "       invertida +="+variable+".charAt(i);\n}"
         return codigo
     }
 }
