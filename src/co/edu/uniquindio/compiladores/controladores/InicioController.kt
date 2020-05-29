@@ -15,6 +15,7 @@ import javafx.fxml.Initializable
 import javafx.scene.control.*
 import javafx.scene.control.cell.PropertyValueFactory
 import javafx.scene.text.TextFlow
+import java.io.File
 import java.net.URL
 import java.util.*
 import kotlin.collections.ArrayList
@@ -102,7 +103,7 @@ class InicioController : Initializable {
                 sintactico = AnalizadorSintactico(lexico.listaTokens)
                 uC = sintactico.esUnidadDeCompilacion()!!
                 tablaErrorSintactico.items = FXCollections.observableArrayList(sintactico.listaErrores)
-                if (uC != null) {
+                if (sintactico.listaErrores.isEmpty() && uC!=null) {
                     arbolVisual.root = uC.getArbolVisual()
                     semantico = AnalizadorSemantico(uC)
                     semantico.llenarTablaSimbolos()
@@ -111,23 +112,44 @@ class InicioController : Initializable {
                 } else {
                     var alerta = Alert(Alert.AlertType.WARNING)
                     alerta.headerText = "CUIDADO"
-                    alerta.contentText = "Hay errores lexicos en el codigo fuente"
+                    alerta.contentText = "Hay errores en el codigo fuente"
+                    alerta.show()
                 }
+            }else {
+                var alerta = Alert(Alert.AlertType.WARNING)
+                alerta.headerText = "CUIDADO"
+                alerta.contentText = "Hay errores en el codigo fuente"
+                alerta.show()
             }
+        }else {
+            var alerta = Alert(Alert.AlertType.WARNING)
+            alerta.headerText = "CUIDADO"
+            alerta.contentText = "No hay codigo fuente"
+            alerta.show()
         }
     }
 
     @FXML
     fun traducirCodigo(e: ActionEvent) {
-        if (uC != null) {
+        if (lexico.listaErrores.isEmpty() && sintactico.listaErrores.isEmpty() && semantico.erroresSemanticos.isEmpty()) {
             var borrar = 1
             var codigo: String = uC.getJavaCode()
+            File("src/Principal.java").writeText(codigo)
+            var runTime = Runtime.getRuntime().exec("java src/Principal.java")
+            runTime.waitFor()
+            Runtime.getRuntime().exec("java Principal", null, File("src"))
+
             txtJavaCodigo.appendText(codigo)
-            if(borrar==1){
-                txtJavaCodigo.clear()
-                var codigo: String = uC.getJavaCode()
-                txtJavaCodigo.appendText(codigo)
-            }
+          //  if(borrar==1){
+            //    txtJavaCodigo.clear()
+              //  var codigo: String = uC.getJavaCode()
+              //  File("src/Principal.java").writeText(codigo)
+              //  txtJavaCodigo.appendText(codigo)
+          //  }
+        }else{
+            var alerta = Alert(Alert.AlertType.ERROR)
+            alerta.headerText = null
+            alerta.show()
         }
     }
     @FXML
