@@ -311,31 +311,38 @@ class AnalizadorSintactico(var listaTokens: ArrayList<Token>) {
             }
             var llaveDer = tokenActual
             obtenerSiguienteToken()
-            if (tokenActual.categoria == Categoria.PALABRA_RESERVADA && tokenActual.lexema == "ademas") {
-            } else {
-                reportarErrores("Falta ademas del si")
-            }
-            var ademas= tokenActual
-            obtenerSiguienteToken()
-            if (tokenActual.categoria == Categoria.LLAVE_IZQUIERDA) {
-            } else {
-                reportarErrores("Falta llave izquierda en la condicion")
-            }
-            var llaveIzqAdemas = tokenActual
-            obtenerSiguienteToken()
-            var sentenciasAdemas = esListaSentencias()
-            if (tokenActual.categoria == Categoria.LLAVE_DERECHA) {
-            } else {
-                reportarErrores("Falta llave derecha en la condicion")
-            }
-            var llaveDerAdemas = tokenActual
-            obtenerSiguienteToken()
+            var ademas=esCondicionAdemas()
+
             return Condicion(
                 palabraReservada, parIzq, expLog, parDer, finCodigo, llaveIzq,
-                sentencias, llaveDer,ademas,llaveIzqAdemas,sentenciasAdemas,llaveDerAdemas
+                sentencias, llaveDer,ademas
             )
         }
         return null
+    }
+
+    fun esCondicionAdemas():CondicionAdemas?{
+
+        if (tokenActual.categoria == Categoria.PALABRA_RESERVADA && tokenActual.lexema == "ademas") {
+        } else {
+            reportarErrores("Falta ademas del si")
+        }
+        var ademas= tokenActual
+        obtenerSiguienteToken()
+        if (tokenActual.categoria == Categoria.LLAVE_IZQUIERDA) {
+        } else {
+            reportarErrores("Falta llave izquierda en la condicion")
+        }
+        var llaveIzqAdemas = tokenActual
+        obtenerSiguienteToken()
+        var sentenciasAdemas = esListaSentencias()
+        if (tokenActual.categoria == Categoria.LLAVE_DERECHA) {
+        } else {
+            reportarErrores("Falta llave derecha en la condicion")
+        }
+        var llaveDerAdemas = tokenActual
+        obtenerSiguienteToken()
+        return CondicionAdemas(ademas,llaveIzqAdemas,sentenciasAdemas,llaveDerAdemas)
     }
 
     /**
