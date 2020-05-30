@@ -18,7 +18,7 @@ class Token(var lexema:String, var categoria: Categoria, var fila:Int, var colum
                 "decimal" -> {return "double"}
                 "log" -> {return "boolean"}
                 "si" -> {return "if"}
-                "imprimir" -> {return "System.out.println"}
+                "imprimir" -> {return "JOptionPane.showMessageDialog(null,"}
                 "retorno" -> {return "return"}
                 "vacio" -> {return "void"}
                 "verdadero" -> {return "true"}

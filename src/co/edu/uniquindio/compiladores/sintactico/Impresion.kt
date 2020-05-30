@@ -32,6 +32,6 @@ class Impresion(var palabraReser: Token?, var parIzq: Token?, var expresion: Exp
     }
 
     override fun getJavaCode(): String {
-        return palabraReser?.getJavaCode() +"("+expresion?.getJavaCode()+");"
+        return palabraReser?.getJavaCode() +expresion?.getJavaCode()+");"
     }
 }
